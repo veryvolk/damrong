@@ -493,6 +493,21 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
     if (e.key === BASE_KEY && e.newValue) mergeBaseFrom(e.newValue, true);
   });
 
+  /* รอให้ผู้ใช้หยุดแตะ/พิมพ์ก่อนค่อยวาดหน้าจอใหม่ (กันปุ่มถูกแทนที่ใต้นิ้วตอนข้อมูลจากเครื่องอื่นเข้ามา) */
+  var lastInput = 0, idleQ = [], idleT = null;
+  ['pointerdown', 'touchstart', 'keydown', 'input', 'wheel'].forEach(function (ev) {
+    window.addEventListener(ev, function () { lastInput = Date.now(); }, { capture: true, passive: true });
+  });
+  function whenIdle(fn) {
+    if (idleQ.indexOf(fn) < 0) idleQ.push(fn);
+    clearTimeout(idleT);
+    (function tick() {
+      var wait = 1200 - (Date.now() - lastInput);
+      var a = document.activeElement, typing = a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && a.type !== 'button';
+      if (wait > 0 || typing) { idleT = setTimeout(tick, Math.max(wait, 400)); return; }
+      var q = idleQ; idleQ = []; q.forEach(function (f) { try { f(); } catch (e) { console.error(e); } });
+    })();
+  }
   /* แอปบนหน้าจอโฮม iPad: ลิงก์ที่เปิดแท็บใหม่ ให้เปิดในแอปเดิม (ไม่หลุดไป Safari ซึ่งต้องล็อกอินใหม่) */
   var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
   if (standalone) document.addEventListener('click', function (e) {
@@ -515,7 +530,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   /* สำหรับทดสอบ/ตรวจสอบ */
-  window.DSYNC = { status: function () { return { status: status, ready: ready, pushing: pushing, dirty: Array.from(dirtyKeys), base: base.size, cursor: cursor }; }, push: push, pull: pullSince, _explode: explode, _implode: implode };
+  window.DSYNC = { whenIdle: whenIdle, status: function () { return { status: status, ready: ready, pushing: pushing, dirty: Array.from(dirtyKeys), base: base.size, cursor: cursor }; }, push: push, pull: pullSince, _explode: explode, _implode: implode };
 })();
 
 </script>
@@ -9065,12 +9080,13 @@ window.addEventListener("dsync:remote", function (e) {
   var ks = (e.detail && e.detail.keys) || [];
   if (ks.indexOf("dp_v4") >= 0) { try { loadP(); } catch (x) {} }
   if (typeof posInboxRender === "function") posInboxRender();
-  var on = document.querySelector(".nbtn.on"); if (!on) return;
-  var pg = on.getAttribute("data-pg"), a = document.activeElement;
-  var typing = a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && a.closest && a.closest(".pg.on");
-  if (pg === "inv" || typing) { showRemoteNote("☁️ มีข้อมูลใหม่จากเครื่องอื่น"); return; }
-  try { goPage(on); } catch (x) {}
-  showRemoteNote("☁️ อัปเดตข้อมูลจากเครื่องอื่นแล้ว");
+  var redraw = function () {
+    var on = document.querySelector(".nbtn.on"); if (!on) return;
+    if (on.getAttribute("data-pg") === "inv") { showRemoteNote("☁️ มีข้อมูลใหม่จากเครื่องอื่น"); return; }
+    try { goPage(on); } catch (x) {}
+    showRemoteNote("☁️ อัปเดตข้อมูลจากเครื่องอื่นแล้ว");
+  };
+  if (window.DSYNC && DSYNC.whenIdle) DSYNC.whenIdle(redraw); else redraw();
 });
 
 /* ══════════ v137 · เลขบิลรันรายวัน (ย้ายมาจาก v123) ══════════

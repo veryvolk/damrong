@@ -11,8 +11,6 @@ h1{margin:14px 0 2px;font-size:26px}p.sub{margin:0 0 26px;opacity:.75}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;width:min(640px,100%)}
 a.card{display:block;text-decoration:none;color:#14243e;background:#fff;border-radius:22px;padding:26px 24px;box-shadow:0 18px 40px rgba(0,0,0,.28);transition:transform .12s}
 a.card:active{transform:scale(.98)}a.card .ic{font-size:40px}a.card b{display:block;font-size:24px;margin:6px 0 4px}a.card span{color:#5b6b82;font-size:15px}
-.tip{margin-top:26px;width:min(640px,100%);background:rgba(255,255,255,.09);border-radius:16px;padding:14px 18px;font-size:14px;line-height:1.6}
-.tip b{color:#ffe08a}
 </style></head><body>
 <img class="logo" src="icon-180.png" alt="">
 <h1>ดำรงค์ ซีฟู้ด</h1><p class="sub">หลังบ้าน · ข้อมูลชุดเดียวกันทุกเครื่อง</p>
@@ -20,11 +18,4 @@ a.card:active{transform:scale(.98)}a.card .ic{font-size:40px}a.card b{display:bl
   <a class="card" href="pos.html"><div class="ic">🛒</div><b>POS รับออเดอร์</b><span>รับออเดอร์ · หน้ากล่อง · สรุปจัดซื้อ</span></a>
   <a class="card" href="bill.html"><div class="ic">📋</div><b>ระบบบิล</b><span>ออกใบส่งของ · ประวัติ · รับเงิน · กำไร</span></a>
 </div>
-<div class="tip" id="tip"></div>
-<script>
-var sa = navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
-document.getElementById('tip').innerHTML = sa
-  ? 'สลับระหว่าง POS กับระบบบิล: แตะป้ายสถานะ <b>☁️</b> มุมซ้ายล่าง แล้วเลือกเมนู'
-  : '<b>iPad:</b> กดปุ่มแชร์ <b>⬆︎</b> ใน Safari → <b>เพิ่มไปยังหน้าจอโฮม</b> จะได้ไอคอนเปิดเหมือนแอป (ล็อกอินครั้งแรกในไอคอนนั้น 1 ครั้ง)';
-</script>
 </body></html>

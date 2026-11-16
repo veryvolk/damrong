@@ -493,6 +493,21 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
     if (e.key === BASE_KEY && e.newValue) mergeBaseFrom(e.newValue, true);
   });
 
+  /* รอให้ผู้ใช้หยุดแตะ/พิมพ์ก่อนค่อยวาดหน้าจอใหม่ (กันปุ่มถูกแทนที่ใต้นิ้วตอนข้อมูลจากเครื่องอื่นเข้ามา) */
+  var lastInput = 0, idleQ = [], idleT = null;
+  ['pointerdown', 'touchstart', 'keydown', 'input', 'wheel'].forEach(function (ev) {
+    window.addEventListener(ev, function () { lastInput = Date.now(); }, { capture: true, passive: true });
+  });
+  function whenIdle(fn) {
+    if (idleQ.indexOf(fn) < 0) idleQ.push(fn);
+    clearTimeout(idleT);
+    (function tick() {
+      var wait = 1200 - (Date.now() - lastInput);
+      var a = document.activeElement, typing = a && /INPUT|TEXTAREA|SELECT/.test(a.tagName) && a.type !== 'button';
+      if (wait > 0 || typing) { idleT = setTimeout(tick, Math.max(wait, 400)); return; }
+      var q = idleQ; idleQ = []; q.forEach(function (f) { try { f(); } catch (e) { console.error(e); } });
+    })();
+  }
   /* แอปบนหน้าจอโฮม iPad: ลิงก์ที่เปิดแท็บใหม่ ให้เปิดในแอปเดิม (ไม่หลุดไป Safari ซึ่งต้องล็อกอินใหม่) */
   var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
   if (standalone) document.addEventListener('click', function (e) {
@@ -515,7 +530,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   /* สำหรับทดสอบ/ตรวจสอบ */
-  window.DSYNC = { status: function () { return { status: status, ready: ready, pushing: pushing, dirty: Array.from(dirtyKeys), base: base.size, cursor: cursor }; }, push: push, pull: pullSince, _explode: explode, _implode: implode };
+  window.DSYNC = { whenIdle: whenIdle, status: function () { return { status: status, ready: ready, pushing: pushing, dirty: Array.from(dirtyKeys), base: base.size, cursor: cursor }; }, push: push, pull: pullSince, _explode: explode, _implode: implode };
 })();
 
 </script>
@@ -1400,9 +1415,9 @@ $('prodSearch').addEventListener('input',renderSearch);
 $('prodSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const nm=(window._searchNames||[])[0]||$('prodSearch').value.trim();if(nm){addFrequentByName(nm);$('prodSearch').select()}}else if(e.key==='Escape'){$('prodSearch').value='';renderSearch()}});
 // V8: ข้อมูล POS ถูกเปลี่ยนจากเครื่องอื่น (ระบบกลาง) หรือแท็บใบส่งของ → โหลด db ใหม่ก่อน กันเขียนทับของใหม่
 function reloadDbFromStorage(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.orders)&&Array.isArray(d.products)&&Array.isArray(d.customers)){db=d;if(!Array.isArray(db.suppliers))db.suppliers=[];if(!Array.isArray(db.purchases))db.purchases=[];db.overrides||={};if(!Array.isArray(db.boxLabels))db.boxLabels=[];return true}}catch{}return false}
-function onRemoteData(keys){if(keys.includes(KEY))reloadDbFromStorage();refreshInvoiceLink()}
+function onRemoteData(keys){if(keys.includes(KEY))reloadDbFromStorage();loadInvoice();if(window.DSYNC&&DSYNC.whenIdle)DSYNC.whenIdle(refreshInvoiceLink);else refreshInvoiceLink()}
 window.addEventListener('dsync:remote',e=>onRemoteData((e.detail&&e.detail.keys)||[]));
-window.addEventListener('storage',e=>{if(e.key===KEY){reloadDbFromStorage();refreshInvoiceLink()}});
+window.addEventListener('storage',e=>{if(e.key===KEY){reloadDbFromStorage();if(window.DSYNC&&DSYNC.whenIdle)DSYNC.whenIdle(refreshInvoiceLink);else refreshInvoiceLink()}});
 // initial
 learnBillNames();renderPosLines();renderAll();openFromHash();
 })();
