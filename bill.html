@@ -2114,8 +2114,8 @@ function goPage(btn) {
     if(!prices || !prices.length) loadP();
     renderTable();
   }
-  if (name === "hist") { populateMonthFilter("h-month"); setHistTab(_histTab||"all"); }
-  if (name === "rep")  { populateMonthFilter("rep-month"); setRepView(_repView||'day'); }
+  if (name === "hist") { window._histLimit = 100; populateMonthFilter("h-month"); setHistTab(_histTab||"all"); }
+  if (name === "rep")  { window._repLimit = 100; populateMonthFilter("rep-month"); setRepView(_repView||'day'); }
   if (name === "cust") { renderCustTable(); }
   if (name === "sales") { renderSalesReport(); }
   if (name === "cost")   { initCostPage(); }
@@ -2855,10 +2855,13 @@ function getQty(line) {
   var r = parseProductLine(line);
   return r ? r.qty : null;
 }
+var _fmt0 = new Intl.NumberFormat("th-TH", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+var _fmt2 = new Intl.NumberFormat("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 function fmtN(n) {
-  /* ปัดเป็นสตางค์ (2 ตำแหน่ง) -- แสดงทศนิยมเฉพาะเมื่อมีเศษจริง */
+  /* ปัดเป็นสตางค์ (2 ตำแหน่ง) -- แสดงทศนิยมเฉพาะเมื่อมีเศษจริง
+     v137.4: ใช้ formatter ที่สร้างไว้ครั้งเดียว (ผลลัพธ์เหมือน toLocaleString เดิมทุกตัวอักษร แต่เร็วกว่ามาก) */
   var v = Math.round((n||0)*100)/100;
-  return v.toLocaleString("th-TH", { minimumFractionDigits: (v % 1 === 0 ? 0 : 2), maximumFractionDigits: 2 });
+  return (v % 1 === 0 ? _fmt0 : _fmt2).format(v);
 }
 function isoDate(d) {
   return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);
@@ -3636,7 +3639,7 @@ function renderHistory(){
   var df = (document.getElementById("h-date")||{value:""}).value;
 
   var filtered=arr.filter(function(b){
-    if(q && (b.cust||"").toLowerCase().indexOf(q)<0) return false;
+    if(q && (b.cust||"").toLowerCase().indexOf(q)<0 && String(b.no||"").toLowerCase().indexOf(q)<0) return false; /* v137.4: ค้นเลขบิลได้ด้วย */
     if(mf){
       var iso=parseBillDate(b.date||"");
       if(!iso||iso.substring(0,7)!==mf) return false;
@@ -3675,7 +3678,8 @@ function renderHistory(){
     return;
   }
   window._histAllocMap = buildAllocMap();
-  filtered.forEach(function(b){
+  var _hl = window._histLimit || 100;   /* v137.4: แสดงทีละ 100 ใบ (ค้นหา/กรอง ยังค้นทั้งหมด) */
+  filtered.slice(0, _hl).forEach(function(b){
     var tr=document.createElement("tr");
     tr.setAttribute("data-no",b.no);
 
@@ -3745,6 +3749,12 @@ function renderHistory(){
     tb.appendChild(tr);
   });
 
+  if (filtered.length > _hl) {
+    var trm = document.createElement("tr"), tdm = document.createElement("td");
+    tdm.colSpan = 8; tdm.style.cssText = "text-align:center;padding:12px";
+    tdm.innerHTML = "<button class='b-blue b-sm' onclick='window._histLimit=(window._histLimit||100)+200;renderHistory()'>แสดงเพิ่ม (เหลืออีก " + (filtered.length - _hl).toLocaleString("th-TH") + " บิล)</button>";
+    trm.appendChild(tdm); tb.appendChild(trm);
+  }
   var tot=filtered.reduce(function(s,b){return s+(b.grand||0);},0);
   document.getElementById("hist-count").textContent=
     filtered.length+" บิล . ยอดรวม ฿"+fmtN(tot);
@@ -4744,7 +4754,8 @@ function renderReport(){
   /* บิล list */
   var rb=document.getElementById("rep-bills"); if(rb){
     rb.innerHTML="";
-    filtered.forEach(function(b){
+    var _rl = window._repLimit || 100;   /* v137.4: แสดงทีละ 100 ใบ */
+    filtered.slice(0, _rl).forEach(function(b){
       var names=(b.items||[]).map(function(it){return it.name+"x"+it.qty+"โล";}).join(", ");
       var tr=document.createElement("tr");
       tr.innerHTML="<td><span class='badge badge-blue' style='font-size:10px'>"+b.no+"</span></td>"+
@@ -4753,6 +4764,7 @@ function renderReport(){
         "<td class='r'>฿"+fmtN(b.grand||0)+"</td>";
       rb.appendChild(tr);
     });
+    if(filtered.length > _rl){ var trr=document.createElement("tr"); trr.innerHTML="<td colspan='5' style='text-align:center;padding:10px'><button class='b-blue b-sm' onclick='window._repLimit=(window._repLimit||100)+200;renderReport()'>แสดงเพิ่ม (เหลืออีก "+(filtered.length-_rl).toLocaleString("th-TH")+" บิล)</button></td>"; rb.appendChild(trr); }
     if(!filtered.length) rb.innerHTML="<tr><td colspan='5' class='no-data'>ยังไม่มีข้อมูล</td></tr>";
   }
 }
@@ -5739,15 +5751,23 @@ function saveBillCost(obj) {
 
 /* ทุนต่อหน่วยของสินค้า สำหรับบิลใบหนึ่ง:
    1) ทุน override รายบิล (ถ้าใส่ไว้) 2) ทุนรายวันของวันที่บิล 3) null = ยังไม่ใส่ */
+/* v137.4: อ่านตารางต้นทุนแบบอ่านอย่างเดียว ใช้ซ้ำได้ตราบที่ข้อมูลใน localStorage ไม่เปลี่ยน (เดิม parse ใหม่ทุกบรรทัด) */
+var _roCache = {};
+function _readOnlyJSON(key) {
+  var raw = localStorage.getItem(key) || "{}", c = _roCache[key];
+  if (c && c.raw === raw) return c.val;
+  var val; try { val = JSON.parse(raw); } catch (e) { val = {}; }
+  _roCache[key] = { raw: raw, val: val }; return val;
+}
 function getItemCost(billUid, billDateISO, itemName) {
-  var bc = loadBillCost();
+  var bc = _readOnlyJSON(KBILLCOST);
   if(bc[billUid] && bc[billUid][itemName] !== undefined && bc[billUid][itemName] !== null && bc[billUid][itemName] !== "")
     return Number(bc[billUid][itemName]);
-  var dc = loadDailyCost();
+  var dc = _readOnlyJSON(KCOST);
   if(billDateISO && dc[billDateISO] && dc[billDateISO][itemName] !== undefined && dc[billDateISO][itemName] !== null && dc[billDateISO][itemName] !== "")
     return Number(dc[billDateISO][itemName]);
   /* ทุนคงที่ต่อหน่วย (กล่อง ฯลฯ) -- ตั้งครั้งเดียวใช้ตลอด */
-  var fc = loadFixedCost();
+  var fc = _readOnlyJSON(KFIXCOST);
   if(fc[itemName] !== undefined && fc[itemName] !== null && fc[itemName] !== "")
     return Number(fc[itemName]);
   return null;
