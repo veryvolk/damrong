@@ -1,2 +1,8 @@
-# damrong
-DamrongSeafood POS
+# Damrong Seafood · หลังบ้าน
+
+เว็บ: https://veryvolk.github.io/damrong/
+
+- `pos.html` — POS รับออเดอร์ / หน้ากล่อง / สรุปจัดซื้อ
+- `bill.html` — ระบบใบส่งของ / ประวัติบิล / รับเงิน / กำไร
+
+ข้อมูลร้านไม่ได้อยู่ในโค้ดนี้ — อยู่ใน Supabase และเข้าถึงได้เฉพาะผู้ใช้ที่ได้รับอนุญาตหลังล็อกอิน
