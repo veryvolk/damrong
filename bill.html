@@ -9314,6 +9314,21 @@ function posLoadPasted(txt) {
   if (!j || !j.plan || !j.cust || !Array.isArray(j.plan.boxes)) { alert("ข้อความจาก POS ไม่สมบูรณ์ — กดคัดลอกจาก POS ใหม่อีกครั้ง"); return; }
   posLoadSummary(posPlanSummary(j.plan, j.cust, posBilledMap(), j.prices));
 }
+/* ราคาต่อหน่วยล่าสุดที่ขายให้ลูกค้ารายนี้ (จากประวัติบิล ใหม่สุดก่อน) */
+function posLastPrices(names) {
+  var keys = {}, out = {}, best = {};
+  names.forEach(function (n) { var k = posKey(n); if (k) keys[k] = 1; });
+  loadHistory().forEach(function (b) {
+    if (!b || !keys[posKey(b.cust)]) return;
+    var d = String(b.date || "") + "|" + String(b.no || "");
+    (b.items || []).forEach(function (it) {
+      var k = posKey(it.name), pr = Number(it.price) || 0;
+      if (!k || !(pr > 0)) return;
+      if (!best[k] || d > best[k]) { best[k] = d; out[k] = pr; }
+    });
+  });
+  return out;
+}
 function posLoadSummary(x) {
   if (!x.confirmed) { alert("หน้ากล่องของออเดอร์นี้ยังไม่ได้ยืนยันใน POS"); return; }
   if (x.bill) { alert("ออเดอร์นี้ออกบิลไปแล้ว: " + x.bill.no + "\nถ้าต้องแก้ ให้แก้ที่หน้า 📚 ประวัติบิล"); return; }
@@ -9324,8 +9339,11 @@ function posLoadSummary(x) {
   clearInv();
   loadP();
   /* ราคา: ใช้ราคาต่อหน่วยจากออเดอร์ POS ถ้ามี (ราคาขายครั้งก่อน/ที่แก้เอง) · ไม่มี → ตารางราคาเหมือนเดิม */
+  /* ราคา: 1) ราคาในออเดอร์ POS  2) ราคาที่ขายลูกค้ารายนี้ครั้งล่าสุด (ของที่คนแพ็คเปลี่ยน/เพิ่ม)  3) ตารางราคา */
+  var lastP = posLastPrices([x.cust.billName, x.cust.name]);
   var items = x.items.map(function (it) {
     var r = posPriceItem(it.name, it.qty), op = Number((x.prices || {})[posKey(it.name)]) || 0;
+    if (!(op > 0)) op = lastP[posKey(r.name)] || lastP[posKey(it.name)] || 0;
     if (op > 0) { r.price = op; r.total = it.qty * op; r.noPrice = false; }
     return r;
   });
@@ -9362,7 +9380,7 @@ function posLoadSummary(x) {
   if (merged.miss.length) { wb.style.display = "block"; wb.textContent = "⚠️ ยังไม่มีราคา: " + merged.miss.join(", ") + " - ใส่ราคาในบิลก่อนบันทึก"; }
   else wb.style.display = "none";
   var note = document.getElementById("pos-load-note");
-  if (note) { note.style.display = "block"; note.innerHTML = "📥 สร้างจากออเดอร์ POS: <b>" + posEsc(name) + "</b> · " + posEsc(posDmy(x.plan.date)) + " — ตรวจรายการ ราคา ค่าส่ง แล้วกด <b>💾 บันทึกบิล</b>" + ((x.plan.changesFromOrder || []).length ? "<br>✏️ รายการตามที่คนแพ็คยืนยัน (แก้จากออเดอร์): " + x.plan.changesFromOrder.map(posEsc).join(" · ") : ""); }
+  if (note) { note.style.display = "block"; note.innerHTML = "📥 สร้างจากออเดอร์ POS: <b>" + posEsc(name) + "</b> · " + posEsc(posDmy(x.plan.date)) + " — ตรวจรายการ ราคา ค่าส่ง แล้วกด <b>💾 บันทึกบิล</b>" + ((x.plan.changesFromOrder || []).length ? "<br>✏️ รายการในบิล = ของในกล่องที่คนแพ็คยืนยัน (แก้จากออเดอร์): " + x.plan.changesFromOrder.map(posEsc).join(" · ") : ""); }
   var pb = document.getElementById("pbox"); if (pb && pb.scrollIntoView) pb.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
