@@ -703,6 +703,7 @@ aside{background:linear-gradient(165deg,#062457 0%,#084b82 73%,#056776 100%);box
 .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
 .qcard{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;background:#fff;border:1.5px solid #f0d9ae;border-left:5px solid #e0a43a;border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit;transition:.12s}.qcard:hover{transform:translateY(-1px);box-shadow:0 6px 16px #1d3d6a14}.qcard b{font-size:15px;color:#16325c}
 .qcard.done{border-color:#cdebd8;border-left-color:#2c9b63}.qcard.on{outline:3px solid #2367c655;border-color:#2367c6}
+.dchips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 10px}.dchip{border:1px solid #cdebd8;background:#fff;color:#176c3e;border-radius:20px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.dchip b{background:#e6f5ec;border-radius:10px;padding:0 7px;margin-left:4px}.dchip.on{background:#138350;color:#fff;border-color:#138350}.dchip.on b{background:#ffffff33}
 .qempty{background:#effaf2;border:1px solid #cdebd8;color:#176c3e;border-radius:11px;padding:10px 12px;font-weight:700;font-size:13px}
 .tbl{display:flex;align-items:center;gap:12px;min-width:0}
 .navtog{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;flex:0 0 46px;border-radius:13px;border:1px solid #cfe0ef;background:#fff;color:#0b3a6e;font-size:23px;line-height:1;padding:0;box-shadow:0 2px 8px #0c40650f;-webkit-tap-highlight-color:transparent}
@@ -975,7 +976,17 @@ function renderBoxQueue(){const el=$('boxQueue');if(!el)return;const {pending,do
  el.innerHTML=`<div class="view-title"><h2>📦 คิวหน้ากล่อง</h2><span class="small muted">ออเดอร์ที่ยืนยันแล้ว ตั้งแต่ ${esc(dmyShort(isoAddDays(-3)))} เป็นต้นไป · กดชื่อเพื่อจัดกล่อง</span></div>
  <div class="qsec"><div class="qhead pend">① รอทำหน้ากล่อง <b>${pending.length}</b></div>${pending.length?byDate(pending):'<div class="qempty">✓ ไม่มีคิวค้าง — ทำครบแล้ว</div>'}</div>
  ${drafts.length?`<div class="qsec"><div class="qhead draft">✎ ออเดอร์ยังเป็นร่าง (ยังไม่เข้าคิว) <b>${drafts.length}</b></div><div class="small" style="color:#8a5a00;margin:4px 0 8px">ต้องเปิดออเดอร์แล้วกด “✓ ยืนยันออเดอร์” ก่อน: ${drafts.map(x=>`<a href="#" onclick="openDraftOrder('${esc(x.date)}','${esc(x.cid)}');return false" style="color:#8a5a00;font-weight:700">${esc(getCustomer(x.cid)?.name||'?')} (${esc(dmyShort(x.date))})</a>`).join(' · ')}</div></div>`:''}
- <div class="qsec"><button type="button" class="qhead donebtn" onclick="showDoneQueue=!showDoneQueue;renderBoxQueue()">② ยืนยันหน้ากล่องแล้ว <b>${done.length}</b> <span>${showDoneQueue?'▲ ซ่อน':'▼ ดู'}</span></button>${showDoneQueue&&done.length?byDateDone(done):''}</div>`}
+ ${doneSection(done,card)}`}
+// V7.8 ยืนยันหน้ากล่องแล้ว: นับแยกวันต่อวัน (ค่าเริ่มต้น = วันนี้)
+let doneDay='';
+function doneSection(done,card){const td=today();if(!doneDay)doneDay=td;
+ const cnt=new Map();done.forEach(x=>cnt.set(x.date,(cnt.get(x.date)||0)+1));
+ const days=[...new Set([td,doneDay,...cnt.keys()])].sort();
+ const list=done.filter(x=>x.date===doneDay);
+ const chips=days.map(d=>`<button type="button" class="dchip${d===doneDay?' on':''}" onclick="setDoneDay('${esc(d)}')">${esc(dayLabel(d))} <b>${cnt.get(d)||0}</b></button>`).join('');
+ return `<div class="qsec"><div class="qhead" style="flex-wrap:wrap"><button type="button" class="donebtn qhead" style="margin:0" onclick="showDoneQueue=!showDoneQueue;renderBoxQueue()">② ยืนยันหน้ากล่องแล้ว · ${esc(dayLabel(doneDay))} <b>${list.length}</b> <span>${showDoneQueue?'▲ ซ่อน':'▼ ดู'}</span></button></div>
+ ${showDoneQueue?`<div class="dchips">${chips}</div>${list.length?`<div class="qgrid">${list.map(x=>card(x,true)).join('')}</div>`:`<div class="small muted" style="margin:4px 0">ยังไม่มีหน้ากล่องที่ยืนยันของ ${esc(dayLabel(doneDay))}</div>`}`:''}</div>`}
+window.setDoneDay=d=>{doneDay=d;renderBoxQueue()};
 window.renderBoxQueue=renderBoxQueue;window.toggleDoneQueue=()=>{showDoneQueue=!showDoneQueue;renderBoxQueue()};
 Object.defineProperty(window,'showDoneQueue',{get:()=>showDoneQueue,set:v=>{showDoneQueue=v},configurable:true});
 function openDraftOrder(date,cid){const o=db.orders.filter(x=>!x.confirmed&&x.date===date&&x.customerId===cid).sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||''))[0];if(o)editOrderById(o.id)}window.openDraftOrder=openDraftOrder;
