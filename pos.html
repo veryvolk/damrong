@@ -729,6 +729,18 @@ body.navc main{padding-left:max(18px,env(safe-area-inset-left))}
 #mergeDlg .mg-row{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:10px;background:#fff;margin-top:6px;border:1px solid #edf2f8}
 #mergeDlg input[type=radio],#mergeDlg input[type=checkbox]{width:22px;height:22px;flex:0 0 22px;margin-top:2px}
 #mergeDlg .mg-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+.ptabs{display:flex;gap:6px;background:#eaf2fb;border-radius:14px;padding:5px;margin:0 0 14px;width:max-content;max-width:100%}
+.ptabs button{border:0;background:transparent;font:inherit;font-weight:800;font-size:15px;color:#4a6585;padding:11px 18px;border-radius:10px;cursor:pointer}
+.ptabs button.on{background:#fff;color:#0b3a6e;box-shadow:0 2px 8px #0c40651a}
+.ps-total{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.ps-total>div{background:#f4f9ff;border:1px solid #dcebf5;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.ps-total b{font-size:20px;color:#0b3a6e}
+.ps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.ps-grid .panel{margin:0}
+.ps-kg{font-size:24px;font-weight:900;color:#0b5cad;margin-bottom:6px}.ps-kg span{font-size:13px;color:#6b7f96}
+.ps-card table.ps-tb{width:100%!important;min-width:0!important;table-layout:fixed;border-collapse:collapse;margin-top:10px}.ps-tb td.r{width:96px}.ps-card{overflow:hidden}.ps-tb td{padding:8px 2px;border-bottom:1px solid #edf1f6;vertical-align:top}.ps-tb td.r{text-align:right;white-space:nowrap}
+.ps-mx th,.ps-mx td{text-align:right;white-space:nowrap}.ps-mx th:first-child,.ps-mx td:first-child{text-align:left}
+@media(max-width:700px){.ps-total{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -798,6 +810,8 @@ body.navc main{padding-left:max(18px,env(safe-area-inset-left))}
    </div>
  </section>
  <section class="section" id="page-purchase">
+   <div class="ptabs"><button type="button" id="ptabPlan" class="on" onclick="setPurchaseTab('plan')">🛒 ต้องสั่ง</button><button type="button" id="ptabSum" onclick="setPurchaseTab('sum')">📋 สรุปที่สั่งแล้ว</button></div>
+   <div id="pPlanView">
    <div class="panel">
      <div class="split-head"><div><h2 style="margin-bottom:5px">ยอดรวมสินค้าสำหรับสั่งแพ</h2><div class="small muted">รวมจากออเดอร์ที่ยืนยันแล้วตามวันที่ส่ง หักยอดที่บันทึกว่าได้สั่ง Supplier ไปแล้ว</div></div><div class="row"><label class="small muted" for="purchaseDate">วันที่ส่ง</label><input type="date" id="purchaseDate" class="datefield"><button class="btn outline sm" onclick="copyAllPlan()">คัดลอกสินค้าทั้งหมด</button></div></div>
        <div id="purchaseAlert"></div>
@@ -816,6 +830,8 @@ body.navc main{padding-left:max(18px,env(safe-area-inset-left))}
     <div class="panel plan-panel"><h2>สรุปต้องสั่ง แยกตาม Supplier</h2><p class="small muted">รายการใหม่จะเป็นรอบถัดไปของ Supplier นั้นโดยอัตโนมัติ · คัดลอกเฉพาะยอดค้าง ไม่รวมที่ส่งไปแล้ว · วันที่ 9/11 + ชื่อสินค้า เว้น 6 ช่อง และจำนวน</p><div id="supplierPlans"></div></div>
     <div class="panel"><div class="view-title"><h2>ประวัติรอบสั่งซื้อ Supplier</h2><span class="tag green">ล็อกยอดแต่ละรอบ</span></div><div id="purchaseLedger"></div></div>
    </div>
+   </div>
+   <div id="pSumView" style="display:none"></div>
  </section>
  <section class="section" id="page-history">
    <div class="panel"><div class="split-head"><div><h2 style="margin-bottom:4px">ประวัติออเดอร์รายวัน</h2><div class="small muted">แก้ไขออเดอร์ได้ แต่รอบที่ยืนยันส่งแพแล้วจะคงเดิม หากลูกค้าลดหรือยกเลิกสินค้า ระบบจะแจ้งยอดสั่งเกิน</div></div><div class="row"><input type="date" id="historyDate" class="datefield"><button class="btn outline sm" onclick="setHistoryAll()">ทุกวัน</button><input id="historySearch" placeholder="ค้นหาชื่อลูกค้า" style="max-width:190px"></div></div><div class="tablewrap" id="orderHistory"></div></div>
@@ -1083,6 +1099,40 @@ function applyOrderDeltas(keys,before){let touched=0;const seen=new Set();keys.f
  if(plan.confirmedAt){plan.reconfirmFrom=plan.confirmedAt;plan.confirmedAt=''}});return touched}
 function customerChangeBanner(plan){return (plan&&(plan.customerChanges||[]).length)?`<div class="box-bill box" style="border-color:#f0b35a;background:#fff6e6">🛒 <b>ลูกค้าแก้ออเดอร์หลังทำหน้ากล่อง</b> — ระบบใส่/เอาออกจากกล่องให้แล้ว ตรวจของแล้วกด “ยืนยันความถูกต้อง” อีกครั้ง (บิลจะออกตามนี้)<div style="margin-top:6px">${plan.customerChanges.map(x=>'• '+esc(x)).join('<br>')}</div>${planBill(plan)?`<div style="margin-top:6px;color:#b42318"><b>⚠ ออกบิล ${esc(planBill(plan).no)} ไปแล้ว</b> — ยืนยันหน้ากล่องแล้ว ไปที่ระบบใบส่งของ กด “🔄 อัปเดตบิล”</div>`:''}</div>`:''}
 window.addItemsToOrder=oid=>{editOrderById(oid);const o=db.orders.find(x=>x.id===oid);const c=o&&getCustomer(o.customerId);$('editingNotice').innerHTML=`<span class="tag orange">➕ เพิ่มสินค้าในออเดอร์ ${esc(c?.name||'')} (${esc(dmyShort(o?.date||''))})</span> · เลือกสินค้าเพิ่ม แล้วกด “✓ ยืนยันออเดอร์” — หน้ากล่องและบิลจะตามให้`;setTimeout(()=>{const s=$('prodSearch');if(s){s.scrollIntoView({behavior:'smooth',block:'center'});s.focus()}},150)};
+
+
+// ══════════ V7.13 · สรุปที่สั่ง Supplier แล้ว (รายวัน/ช่วงวัน) ══════════
+let pTab='plan',psFrom='',psTo='',psBasis='date';
+const isoLocal=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const addDaysIso=(iso,k)=>{const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+k);return isoLocal(d)};
+const sentDay=p=>{const t=p.sentAt||p.createdAt;if(!t)return p.date;const d=new Date(t);return isNaN(d)?p.date:isoLocal(d)};
+window.setPurchaseTab=t=>{pTab=t;$('pPlanView').style.display=t==='plan'?'':'none';$('pSumView').style.display=t==='sum'?'':'none';$('ptabPlan').classList.toggle('on',t==='plan');$('ptabSum').classList.toggle('on',t==='sum');if(t==='sum')renderPurchaseSummary()};
+window.psQuick=k=>{const td=today();if(k==='today'){psFrom=psTo=td}else if(k==='yday'){psFrom=psTo=addDaysIso(td,-1)}else if(k==='tmr'){psFrom=psTo=addDaysIso(td,1)}else{psTo=td;psFrom=addDaysIso(td,-(+k-1))}renderPurchaseSummary()};
+window.psSet=()=>{psFrom=$('psFrom').value||today();psTo=$('psTo').value||psFrom;if(psTo<psFrom)[psFrom,psTo]=[psTo,psFrom];psBasis=$('psBasis').value;renderPurchaseSummary()};
+function psData(){const recs=db.purchases.filter(p=>!p.voidedAt&&n(p.qty)>0).map(p=>({p,day:psBasis==='sent'?sentDay(p):p.date})).filter(x=>x.day>=psFrom&&x.day<=psTo);
+ const sup=new Map();recs.forEach(({p,day})=>{const sid=p.supplierId||'';if(!sup.has(sid))sup.set(sid,{sid,name:getSupplier(sid)?.name||'ไม่พบชื่อแพ',kg:0,rounds:new Set(),items:new Map(),days:new Map()});const s=sup.get(sid);
+  const name=getProduct(p.productId)?.name||p.productName||'?',key=p.productId||name;s.kg=num(s.kg+n(p.qty));s.rounds.add(p.batchId||`legacy:${p.date}:${sid}`);s.days.set(day,num((s.days.get(day)||0)+n(p.qty)));
+  const it=s.items.get(key)||{name,kg:0,days:new Map()};it.kg=num(it.kg+n(p.qty));it.days.set(day,num((it.days.get(day)||0)+n(p.qty)));s.items.set(key,it)});
+ return [...sup.values()].sort((a,b)=>b.kg-a.kg)}
+const dShort=iso=>{const [y,m,d]=iso.split('-');return `${+d}/${+m}`};
+function psRangeLabel(){return psFrom===psTo?(psFrom===today()?'วันนี้ '+dShort(psFrom):dShort(psFrom)+'/'+(+psFrom.slice(0,4)+543)):`${dShort(psFrom)} – ${dShort(psTo)}`}
+function psCopyText(s){const items=[...s.items.values()].sort((a,b)=>a.name.localeCompare(b.name,'th'));return `สรุปสั่ง ${s.name} · ${psRangeLabel()}\n`+items.map(i=>`${i.name}      ${kg(i.kg)}`).join('\n')+`\nรวม ${kg(s.kg)} กก.`}
+window.psCopy=sid=>{const s=psData().find(x=>x.sid===sid);if(!s)return;const t=psCopyText(s);(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('คัดลอกสรุป '+s.name+' แล้ว')).catch(()=>prompt('คัดลอกข้อความนี้',t))};
+function renderPurchaseSummary(){const el=$('pSumView');if(!el||pTab!=='sum')return;if(!psFrom){psFrom=psTo=today()}
+ const data=psData(),multi=psFrom!==psTo,total=num(data.reduce((a,s)=>a+s.kg,0)),rounds=data.reduce((a,s)=>a+s.rounds.size,0);
+ const days=[];if(multi){let d=psFrom,g=0;while(d<=psTo&&g++<62){days.push(d);d=addDaysIso(d,1)}}
+ const chip=(k,l)=>`<button type="button" class="dchip" onclick="psQuick('${k}')">${l}</button>`;
+ const head=`<div class="panel"><div class="split-head"><div><h2 style="margin-bottom:5px">สรุปที่สั่ง Supplier แล้ว</h2><div class="small muted">นับเฉพาะรอบที่กด “ยืนยันว่าได้ส่งแพแล้ว” · ไม่นับรอบที่ยกเลิก</div></div></div>
+  <div class="dchips" style="margin-top:12px">${chip('today','วันนี้')}${chip('yday','เมื่อวาน')}${chip('tmr','พรุ่งนี้')}${chip('7','7 วัน')}${chip('30','30 วัน')}</div>
+  <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center"><label class="small muted">ตั้งแต่</label><input type="date" id="psFrom" class="datefield" value="${psFrom}" onchange="psSet()"><label class="small muted">ถึง</label><input type="date" id="psTo" class="datefield" value="${psTo}" onchange="psSet()"><label class="small muted">นับตาม</label><select id="psBasis" onchange="psSet()" style="width:auto"><option value="date"${psBasis==='date'?' selected':''}>วันที่ส่งของ (ตามออเดอร์)</option><option value="sent"${psBasis==='sent'?' selected':''}>วันที่กดสั่งแพ</option></select></div>
+  <div class="ps-total"><div><span class="small muted">ช่วง</span><b>${esc(psRangeLabel())}</b></div><div><span class="small muted">รวมสั่ง</span><b>${kg(total)} กก.</b></div><div><span class="small muted">Supplier</span><b>${data.length} เจ้า</b></div><div><span class="small muted">รอบสั่ง</span><b>${rounds} รอบ</b></div></div></div>`;
+ if(!data.length){el.innerHTML=head+'<div class="panel"><div class="empty">ยังไม่มีรอบสั่ง Supplier ที่ยืนยันแล้วในช่วงนี้</div></div>';return}
+ const matrix=multi&&days.length<=31?`<div class="panel"><h2>แยกรายวัน (กก.)</h2><div class="tablewrap"><table class="ps-mx"><thead><tr><th>วันที่</th>${data.map(s=>`<th>${esc(s.name)}</th>`).join('')}<th>รวม</th></tr></thead><tbody>${days.filter(d=>data.some(s=>s.days.get(d))).map(d=>`<tr><td>${dShort(d)}</td>${data.map(s=>`<td>${s.days.get(d)?kg(s.days.get(d)):'<span class="muted">—</span>'}</td>`).join('')}<td><b>${kg(data.reduce((a,s)=>a+(s.days.get(d)||0),0))}</b></td></tr>`).join('')}</tbody></table></div></div>`:'';
+ const cards=data.map(s=>{const items=[...s.items.values()].sort((a,b)=>b.kg-a.kg);return `<div class="panel ps-card"><div class="row between" style="align-items:flex-start"><div><h2 style="margin:0">${esc(s.name)}</h2><div class="small muted">${s.rounds.size} รอบ · ${items.length} รายการ</div></div><div style="text-align:right"><div class="ps-kg">${kg(s.kg)} <span>กก.</span></div><button class="btn outline sm" onclick="psCopy('${esc(s.sid)}')">⧉ คัดลอก</button></div></div>
+  <table class="ps-tb"><tbody>${items.map(i=>`<tr><td>${esc(i.name)}${multi&&i.days.size>1?`<div class="small muted">${[...i.days.entries()].sort().map(([d,q])=>dShort(d)+' '+kg(q)).join(' · ')}</div>`:''}</td><td class="r"><b>${kg(i.kg)}</b> กก.</td></tr>`).join('')}</tbody></table></div>`}).join('');
+ el.innerHTML=head+matrix+`<div class="ps-grid">${cards}</div>`}
+window.renderPurchaseSummary=renderPurchaseSummary;
+renderPurchase=(f=>function(){f.apply(this,arguments);renderPurchaseSummary()})(renderPurchase);
 
 function runFixNames(){const go=()=>{try{runAliasFix();fixNamesOnce();renderAll();if(duplicateGroups().length&&!sessionStorage.getItem('mg_shown')){sessionStorage.setItem('mg_shown','1');setTimeout(()=>openMergeDialog(true),1500)}}catch(e){console.error(e)}};if(!window.DSYNC)return go();let n=0;const tick=()=>{const s=DSYNC.status();if(s.ready&&!s.pushing&&s.status&&s.status.s==='ok')return DSYNC.whenIdle(go);if(++n<120)setTimeout(tick,1000)};setTimeout(tick,1500)}
 window.toggleDoneQueue=()=>{showDoneQueue=!showDoneQueue;renderBoxQueue()};
