@@ -3608,6 +3608,26 @@ function saveBillToHistory(){
   if (typeof posInboxRender === "function") posInboxRender();
 }
 
+/* CAPTURE-FIX v1 */
+/* รูปบิลขนาดเดียวกันทุกเครื่อง (คอม / iPad / มือถือ) */
+var DOC_CAPTURE_W = 515;
+function captureOpts(id, opts, fixW) {
+  opts = opts || {};
+  opts.windowWidth = Math.max(window.innerWidth || 0, 1280);
+  opts.onclone = function (doc) {
+    var t = doc.getElementById("ipad-touch"); if (t && t.parentNode) t.parentNode.removeChild(t);   /* ฟอนต์ช่องกรอกกลับเป็นแบบคอม */
+    var c = doc.getElementById(id);
+    if (c && fixW) { c.style.width = fixW + "px"; c.style.maxWidth = "none"; c.style.boxSizing = "border-box"; }
+    if (c) {
+      /* ใบสรุปยอดหนี้: รูปแสดงรับเงินแค่ 5 รายการล่าสุด */
+      c.querySelectorAll(".stmt-pay-old").forEach(function (r) { r.style.display = "none"; });
+      c.querySelectorAll(".stmt-pay-more").forEach(function (r) { r.style.display = "table-row"; });
+      c.querySelectorAll(".stmt-edit-col").forEach(function (r) { r.style.display = "none"; });
+    }
+  };
+  return opts;
+}
+
 async function savePNG(){
   saveBillToHistory();
   var el=document.getElementById("doc");
@@ -3631,7 +3651,7 @@ async function savePNG(){
   var dInpP = el.querySelector(".bill-disc-input");
   if(dShowP && dInpP && (parseFloat(dInpP.value)||0) > 0){ dShowP.style.display="flex"; }
   try {
-    var c=await html2canvas(el,{scale:2,backgroundColor:"#fff",useCORS:true});
+    var c=await html2canvas(el,captureOpts("doc",{scale:2,backgroundColor:"#fff",useCORS:true},DOC_CAPTURE_W));
     var a=document.createElement("a");
     a.download="ใบส่งของ-"+invNo+".png";a.href=c.toDataURL("image/png");a.click();
   } catch(err){ alert("เกิดข้อผิดพลาด: "+err.message); }
@@ -5216,7 +5236,7 @@ async function copyImage() {
   }
 
   try {
-    var canvas = await html2canvas(el, {scale:2, backgroundColor:"#ffffff", useCORS:true, logging:false});
+    var canvas = await html2canvas(el, captureOpts("doc", {scale:2, backgroundColor:"#ffffff", useCORS:true, logging:false}, DOC_CAPTURE_W));
     restore();
 
     /* ลอง Clipboard API ก่อนเลย -- ไม่เช็ค isSecureContext */
@@ -8752,15 +8772,24 @@ function buildStatementHTML(cust) {
 
   /* ตารางการชำระ */
   if(pays.length){
-    h += "<div style='font-size:12px;font-weight:700;color:#0F6E56;margin-bottom:6px'>💰 ประวัติการชำระ</div>";
+    h += "<div style='font-size:12px;font-weight:700;color:#0F6E56;margin-bottom:6px'>💰 ประวัติการชำระ" +
+         (pays.length > 5 ? "<span class='stmt-edit-col' style='font-weight:400;color:#6b7a9e'> · ในรูปที่คัดลอก/บันทึก จะแสดงแค่ 5 รายการล่าสุด</span>" : "") + "</div>";
     h += "<table style='width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px'>";
     h += "<thead><tr style='background:#E1F5EE;color:#0a6850'>"+
          "<th style='padding:6px 8px;text-align:left;font-weight:700'>วันที่รับเงิน</th>"+
          "<th style='padding:6px 8px;text-align:right;font-weight:700'>จำนวนเงิน</th>"+
          "<th class='stmt-edit-col' style='padding:6px 8px;text-align:center;font-weight:700;width:120px'>แก้ไข</th>"+
          "</tr></thead><tbody>";
-    pays.forEach(function(p){
-      h += "<tr style='border-bottom:1px solid #e8f5f0'>";
+    /* รูปที่ส่งลูกค้า: รับเงินแค่ 5 รายการล่าสุด (หน้าจอยังแสดงครบเพื่อแก้ไข) */
+    var PAY_SHOW = 5, nOld = Math.max(0, pays.length - PAY_SHOW), oldSum = 0;
+    pays.forEach(function(p, pi){ if(pi < nOld) oldSum += (p.amount||0); });
+    if(nOld > 0){
+      h += "<tr class='stmt-pay-more' style='display:none;background:#F4FAF7;border-bottom:1px solid #d5ede4'>"+
+           "<td style='padding:6px 8px;color:#0a6850;font-size:11px'>รับเงินก่อนหน้านี้อีก "+nOld+" รายการ</td>"+
+           "<td style='padding:6px 8px;text-align:right;color:#0F6E56;font-size:11px'>฿"+fmtN(oldSum)+"</td></tr>";
+    }
+    pays.forEach(function(p, pi){
+      h += "<tr class='"+(pi < nOld ? "stmt-pay-old" : "")+"' style='border-bottom:1px solid #e8f5f0'>";
       h += "<td style='padding:6px 8px;color:#4a5a7e'>"+thaiDate(p.date||"")+"</td>";
       h += "<td style='padding:6px 8px;text-align:right;font-weight:700;color:#0F6E56'>฿"+fmtN(p.amount||0)+"</td>";
       h += "<td class='stmt-edit-col' style='padding:4px 8px;text-align:center;white-space:nowrap'>"+
@@ -8816,7 +8845,7 @@ async function captureStatement(mode) {
   var restore = function(){ editCols.forEach(function(c){ c.style.display = ""; }); };
 
   try {
-    var c = await html2canvas(el, {scale:2, backgroundColor:"#fff", useCORS:true});
+    var c = await html2canvas(el, captureOpts("stmt-card", {scale:2, backgroundColor:"#fff", useCORS:true}));
     if(mode === "save"){
       var a=document.createElement("a");
       a.download = "สรุปยอด-"+(_stmtCust||"ลูกค้า")+"-"+todayISO()+".png";
