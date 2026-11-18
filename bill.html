@@ -9329,6 +9329,15 @@ function posLastPrices(names) {
   });
   return out;
 }
+/* ชื่อในบิลที่เคยแก้ไว้ในบิลจาก POS ของลูกค้ารายนี้ (ใช้ทันที ไม่ต้องรอ POS เรียนรู้) */
+function posLearnedBillName(c, exceptPlanId) {
+  var db = posReadDb(); if (!db || !c || !c.id) return "";
+  var ids = {}; (db.boxLabels || []).forEach(function (p) { if (p && p.customerId === c.id && p.id !== exceptPlanId) ids[p.id] = 1; });
+  var best = null;
+  loadHistory().forEach(function (b) { if (b && b.posPlanId && ids[b.posPlanId] && (!best || String(b.date || "") > String(best.date || ""))) best = b; });
+  var n = best ? String(best.cust || "").trim().replace(/\s+/g, " ") : "";
+  return n && posKey(n) !== posKey(c.name) ? n : "";
+}
 function posLoadSummary(x) {
   if (!x.confirmed) { alert("หน้ากล่องของออเดอร์นี้ยังไม่ได้ยืนยันใน POS"); return; }
   if (x.bill) { alert("ออเดอร์นี้ออกบิลไปแล้ว: " + x.bill.no + "\nถ้าต้องแก้ ให้แก้ที่หน้า 📚 ประวัติบิล"); return; }
@@ -9351,7 +9360,8 @@ function posLoadSummary(x) {
   if (x.small) items.push(posPriceItem(_posBoxCodes["ล"], x.small));
 
   /* ชื่อในบิล: ใช้ "ชื่อในบิล" ที่ POS จำไว้ ถ้ามี (บางลูกค้าชื่อบนบิลกับบนกล่องต่างกัน) */
-  var c = x.cust, name = String(c.billName || c.name || "").trim(), prov = c.billName ? "" : String(c.province || "").trim();
+  var c = x.cust, learned = c.billName ? "" : posLearnedBillName(c, x.plan.id);
+  var name = String(c.billName || learned || c.name || "").trim(), prov = (c.billName || learned) ? "" : String(c.province || "").trim();
   if (prov && name.indexOf(prov) >= 0) prov = "";
   var phone = String(x.plan.labelPhone != null && x.plan.labelPhone !== "" ? x.plan.labelPhone : (c.phone || "")).trim();
   if (!phone) { /* ไม่มีเบอร์ใน POS → ใช้เบอร์จากบิลล่าสุดของลูกค้าคนนี้ */
