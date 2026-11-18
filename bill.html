@@ -3508,7 +3508,8 @@ function saveBillToHistory(){
   })();
 
   /* v137: กันเลขซ้ำ/เลขไม่ตรงวันที่ก่อนบันทึกเสมอ */
-  if (!isNoValidFor(invNo, billDate)) refreshInvNoForDate(billDate);
+  if (!_accumulated._replaceNo && !isNoValidFor(invNo, billDate)) refreshInvNoForDate(billDate);
+  if (_accumulated._replaceNo) { invNo = _accumulated._replaceNo; }
 
   var billDiscEl = document.querySelector(".bill-disc-input");
   var billDiscVal = billDiscEl ? (parseFloat(billDiscEl.value)||0) : 0;
@@ -3553,7 +3554,24 @@ function saveBillToHistory(){
     bill.posPlanConfirmedAt = _accumulated._posPlanConfirmedAt || "";
   }
 
+  if (_accumulated._replaceNo) {
+    /* v137.5: แทนบิลเดิม (เลขเดิม · สถานะชำระเดิม) */
+    var harr = loadHistory(), hidx = -1;
+    for (var hi2 = 0; hi2 < harr.length; hi2++) {
+      var hb = harr[hi2];
+      if (hb && ((_accumulated._replaceUid && hb._uid === _accumulated._replaceUid) || (!_accumulated._replaceUid && hb.no === _accumulated._replaceNo))) { hidx = hi2; break; }
+    }
+    if (hidx >= 0) {
+      var old = harr[hidx];
+      bill._uid = old._uid || bill._uid; bill.no = old.no; bill.date = old.date; bill.dateDisp = old.dateDisp;
+      bill.status = old.status || "unpaid"; bill.paidAt = old.paidAt || null;
+      ["paidAmt", "payMethod", "payNote", "cost", "costs"].forEach(function (k) { if (old[k] !== undefined) bill[k] = old[k]; });
+      bill.updatedFromPos = new Date().toISOString(); bill.prevGrand = old.grand;
+      harr[hidx] = bill; saveHistory(harr);
+    } else { pushBill(bill); }
+  } else {
   pushBill(bill);
+  }
   _accumulated._saved = true;
   if (typeof posInboxRender === "function") posInboxRender();
 }
@@ -9214,7 +9232,7 @@ function posReadyPlans() {
     if (p && p.confirmedAt) return;
     var stage = !o.confirmed ? "draft" : (p ? "unconfirmed" : "nobox");
     if (seen[k]) { if (seen[k].stage === "draft" && stage !== "draft") seen[k].stage = stage; return; }
-    seen[k] = { date: o.date, cid: o.customerId, cust: custOf(o.customerId), stage: stage };
+    seen[k] = { date: o.date, cid: o.customerId, cust: custOf(o.customerId), stage: stage, billNo: (p && billed[p.id]) ? billed[p.id].no : "", custChanged: !!(p && (p.customerChanges || []).length) };
     waitingBox.push(seen[k]);
   });
   waitingBox.sort(function (a, b) { return b.date.localeCompare(a.date); });
@@ -9256,7 +9274,8 @@ function posInboxRender() {
       if (isDone) {
         var changed = x.bill.posPlanConfirmedAt && x.plan.confirmedAt !== x.bill.posPlanConfirmedAt;
         right = '<span style="font-size:12px;color:#0F6E56;font-weight:700">✓ ' + posEsc(x.bill.no) + ' · ฿' + fmtN(x.bill.grand) + '</span>' +
-          (changed || !x.confirmed ? '<div style="font-size:11px;color:#C0392B;font-weight:700">⚠ หน้ากล่องถูกแก้หลังออกบิล — ตรวจบิลนี้</div>' : '');
+          (!x.confirmed ? '<div style="font-size:11px;color:#C0392B;font-weight:700">⚠ ออเดอร์/หน้ากล่องถูกแก้ — รอยืนยันหน้ากล่องใหม่ใน POS</div>'
+           : changed ? '<div style="font-size:11px;color:#C0392B;font-weight:700;margin:2px 0 4px">⚠ หน้ากล่องถูกแก้หลังออกบิล</div><button class="b-blue b-sm" onclick="posLoadPlan(\'' + posEsc(x.plan.id) + '\', true)">🔄 อัปเดตบิล</button>' : '');
       } else {
         right = '<button class="b-blue b-sm" onclick="posLoadPlan(\'' + posEsc(x.plan.id) + '\')">📄 สร้างบิล</button>';
       }
@@ -9288,11 +9307,17 @@ function posInboxRender() {
       dates.map(function (d) {
         return '<div style="margin-top:6px"><b>' + posEsc(posDmy(d)) + ':</b> ' + byDate[d].map(function (w) {
           return '<a href="pos.html#box=' + encodeURIComponent(w.date + "|" + w.cid) + '" target="damrong_pos" style="color:#8a5a00;font-weight:700">' +
-            posEsc((w.cust && w.cust.name) || "?") + '</a> <span style="font-size:11px">(' + stTxt[w.stage] + ')</span>';
+            posEsc((w.cust && w.cust.name) || "?") + '</a> <span style="font-size:11px">(' + (w.custChanged ? 'ลูกค้าแก้ออเดอร์ · ' : '') + stTxt[w.stage] + (w.billNo ? ' · ออกบิล ' + posEsc(w.billNo) + ' แล้ว → ยืนยันกล่องใหม่แล้วกดอัปเดตบิล' : '') + ')</span>';
         }).join(" · ") + '</div>';
       }).join("") +
       (older ? '<div style="margin-top:6px;font-size:11px;color:#a07a30">+ ออเดอร์เก่ากว่า 3 วันที่ยังไม่จัดกล่องอีก ' + older + ' ราย (ไม่ต้องทำอะไรถ้าออกบิลด้วยวิธีเดิมไปแล้ว)</div>' : '') +
       '<div style="margin-top:6px;font-size:11px">กดชื่อลูกค้า = เปิด POS ไปที่หน้ากล่องของลูกค้านั้น</div></div>';
+  }
+  /* บิลที่ต้องอัปเดต: หน้ากล่องยืนยันใหม่หลังออกบิล → โชว์ตลอด ไม่ต้องกางดู */
+  var needUpd = done.filter(function (x) { return x.confirmed && x.bill.posPlanConfirmedAt && x.plan.confirmedAt !== x.bill.posPlanConfirmedAt; });
+  if (needUpd.length) {
+    html += '<div style="margin-top:8px;background:#fdecea;border-radius:8px;padding:6px 12px"><b style="color:#C0392B;font-size:13px">🔄 ต้องอัปเดตบิล (หน้ากล่องเปลี่ยนหลังออกบิล) ' + needUpd.length + '</b>' + rows(needUpd, true) + '</div>';
+    done = done.filter(function (x) { return needUpd.indexOf(x) < 0; });
   }
   if (done.length) {
     html += '<div style="margin-top:8px"><button class="b-sm" onclick="_posShowDone=!_posShowDone;posInboxRender()">' + (_posShowDone ? '▲ ซ่อน' : '▼ ดู') + 'ที่ออกบิลแล้ว (' + done.length + ')</button></div>';
@@ -9301,11 +9326,11 @@ function posInboxRender() {
   box.innerHTML = html;
 }
 
-function posLoadPlan(planId) {
+function posLoadPlan(planId, update) {
   var r = posReadyPlans(); if (!r) return;
   var x = null; r.plans.forEach(function (p) { if (p.plan.id === planId) x = p; });
   if (!x) { alert("ไม่พบออเดอร์นี้ใน POS แล้ว — กดรีเฟรช"); posInboxRender(); return; }
-  posLoadSummary(x);
+  posLoadSummary(x, !!update);
 }
 /* ทางสำรอง: วางข้อความที่ POS คัดลอกให้ (#DAMRONG-POS) ลงช่องวางข้อความ แล้วกดสร้างใบส่งของ */
 function posLoadPasted(txt) {
@@ -9338,9 +9363,9 @@ function posLearnedBillName(c, exceptPlanId) {
   var n = best ? String(best.cust || "").trim().replace(/\s+/g, " ") : "";
   return n && posKey(n) !== posKey(c.name) ? n : "";
 }
-function posLoadSummary(x) {
+function posLoadSummary(x, update) {
   if (!x.confirmed) { alert("หน้ากล่องของออเดอร์นี้ยังไม่ได้ยืนยันใน POS"); return; }
-  if (x.bill) { alert("ออเดอร์นี้ออกบิลไปแล้ว: " + x.bill.no + "\nถ้าต้องแก้ ให้แก้ที่หน้า 📚 ประวัติบิล"); return; }
+  if (x.bill && !update) { alert("ออเดอร์นี้ออกบิลไปแล้ว: " + x.bill.no + "\nถ้าต้องแก้ ให้แก้ที่หน้า 📚 ประวัติบิล"); return; }
   if (!x.cust) { alert("ไม่พบข้อมูลลูกค้าของออเดอร์นี้ใน POS"); return; }
   if (_accumulated && !_accumulated._saved && document.getElementById("doc").innerHTML &&
       !confirm("บิลที่กำลังทำอยู่ยังไม่ได้บันทึก\nต้องการทิ้งบิลนั้นแล้วสร้างบิลจากออเดอร์ POS หรือไม่?")) return;
@@ -9376,7 +9401,8 @@ function posLoadSummary(x) {
     items: items, totalBoxes: (x.big + x.small) || 1,
     _posPlanId: x.plan.id, _posPlanConfirmedAt: x.plan.confirmedAt || ""
   };
-  invNo = nextNoForDate(x.plan.date);
+  if (update && x.bill) { _accumulated._replaceNo = x.bill.no; _accumulated._replaceUid = x.bill._uid || ""; invNo = x.bill.no; }
+  else invNo = nextNoForDate(x.plan.date);
   var merged = buildMerged(_accumulated);
   currentBillData = merged;
   document.getElementById("pempty").style.display = "none";
@@ -9390,7 +9416,7 @@ function posLoadSummary(x) {
   if (merged.miss.length) { wb.style.display = "block"; wb.textContent = "⚠️ ยังไม่มีราคา: " + merged.miss.join(", ") + " - ใส่ราคาในบิลก่อนบันทึก"; }
   else wb.style.display = "none";
   var note = document.getElementById("pos-load-note");
-  if (note) { note.style.display = "block"; note.innerHTML = "📥 สร้างจากออเดอร์ POS: <b>" + posEsc(name) + "</b> · " + posEsc(posDmy(x.plan.date)) + " — ตรวจรายการ ราคา ค่าส่ง แล้วกด <b>💾 บันทึกบิล</b>" + ((x.plan.changesFromOrder || []).length ? "<br>✏️ รายการในบิล = ของในกล่องที่คนแพ็คยืนยัน (แก้จากออเดอร์): " + x.plan.changesFromOrder.map(posEsc).join(" · ") : ""); }
+  if (note) { note.style.display = "block"; note.innerHTML = (update && x.bill ? "🔄 <b>อัปเดตบิล " + posEsc(x.bill.no) + "</b> (ยอดเดิม ฿" + fmtN(x.bill.grand) + ") ตามหน้ากล่องที่ยืนยันใหม่ — บันทึกแล้วจะแทนบิลเดิม เลขเดิม สถานะชำระเดิม" + ((x.plan.lastCustomerChanges || []).length ? "<br>🛒 " + x.plan.lastCustomerChanges.map(posEsc).join(" · ") : "") + "<br>" : "") + "📥 สร้างจากออเดอร์ POS: <b>" + posEsc(name) + "</b> · " + posEsc(posDmy(x.plan.date)) + " — ตรวจรายการ ราคา ค่าส่ง แล้วกด <b>💾 บันทึกบิล</b>" + ((x.plan.changesFromOrder || []).length ? "<br>✏️ รายการในบิล = ของในกล่องที่คนแพ็คยืนยัน (แก้จากออเดอร์): " + x.plan.changesFromOrder.map(posEsc).join(" · ") : ""); }
   var pb = document.getElementById("pbox"); if (pb && pb.scrollIntoView) pb.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
