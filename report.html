@@ -201,6 +201,99 @@ details.more summary::-webkit-details-marker{display:none}
 .stmt-prev{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden}
 .stmt-prev .stmt-card{transform-origin:top left}
 
+/* ═══════ หน้าแรกใหม่ (แบรนด์) ═══════ */
+.brand{background:radial-gradient(500px 220px at 85% -20%,rgba(255,255,255,.18),transparent 60%),linear-gradient(155deg,#14307a 0%,#1f4fb3 55%,#2f6fe0 100%);color:#fff;border-radius:24px;padding:18px 16px 20px;margin:-2px 0 14px;box-shadow:0 14px 34px rgba(26,58,143,.28);position:relative;overflow:hidden}
+.brand:after{content:"";position:absolute;right:-40px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.brand-top{display:flex;align-items:center;gap:12px}
+.brand .logo{width:52px;height:52px;border-radius:50%;background:#fff;padding:2px;object-fit:contain;box-shadow:0 4px 12px rgba(0,0,0,.2);flex:none}
+.b-shop{font-size:13px;color:#bcd0ff;letter-spacing:.3px}
+.b-title{font-size:21px;font-weight:800;line-height:1.2}
+.chips{display:flex;gap:7px;overflow-x:auto;margin:14px -16px 0;padding:2px 16px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;border-radius:20px;padding:7px 14px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.chips button.on{background:#fff;color:#1a3a8f;border-color:#fff;font-weight:800;box-shadow:0 3px 10px rgba(0,0,0,.18)}
+.b-day{display:flex;align-items:center;gap:8px;margin-top:14px}
+.b-day button{width:36px;height:36px;border-radius:12px;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:18px;cursor:pointer;flex:none}
+.b-day button:disabled{opacity:.3}
+.b-date{flex:1;text-align:center;font-weight:700;font-size:15px;position:relative;color:#e6eeff}
+.b-date input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.b-lbl{margin-top:12px;font-size:13px;color:#bcd0ff}
+.b-big{font-size:42px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+@media(max-width:360px){.b-big{font-size:36px}}
+.b-cmp{margin-top:6px;font-size:13px;color:#d6e2ff;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.chip-d{font-weight:800;border-radius:20px;padding:2px 9px;font-size:13px}
+.chip-d.up{background:#d9f7e6;color:#0b7a3e}.chip-d.down{background:#ffe1e1;color:#b42318}.chip-d.flat{background:rgba(255,255,255,.2);color:#fff}
+.b-hint{margin-top:12px;width:100%;border:1px dashed rgba(255,255,255,.45);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:9px;font-size:13.5px;cursor:pointer}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{border-radius:18px;padding:13px 14px;border:1px solid transparent}
+.kpi .k-l{font-size:13px;font-weight:700;opacity:.85}
+.kpi .k-v{font-size:22px;font-weight:800;margin-top:3px;line-height:1.2}
+.kpi .k-v small{font-size:13px;font-weight:700}
+.kpi .k-s{margin-top:5px}
+.kb{background:#e8f1fd;color:#184f95;border-color:#d3e4fa}
+.kv{background:#efedfc;color:#4a3bb0;border-color:#e0dcf8}
+.kg{background:#e3f6ee;color:#0d6b49;border-color:#cdeedf}
+.ko{background:#fdefe7;color:#a8431a;border-color:#f9dccb}
+.acts2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.catbar{display:flex;height:16px;border-radius:9px;overflow:hidden;gap:2px;background:#fff}
+.catbar i{display:block;height:100%}
+.catleg{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:12px;font-size:14px}
+@media(min-width:760px){.catleg{grid-template-columns:repeat(3,1fr)}}
+.catleg>div{display:flex;align-items:center;gap:6px;min-width:0}
+.catleg .sw,.dleg .sw{width:11px;height:11px;border-radius:4px;flex:none}
+.catleg .pc{margin-left:auto;font-weight:800}
+.catleg .am{display:none}
+.rank .rk{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid #f1f3f8;cursor:pointer}
+.rank .rk:last-child{border-bottom:0}
+.rank .md{width:26px;text-align:center;font-size:18px;flex:none;color:var(--muted);font-weight:700}
+.rank .nm{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .nm small{display:block;font-weight:500;color:var(--muted);font-size:12px}
+.rank .am{font-weight:800;white-space:nowrap}
+.debt-tile{background:linear-gradient(135deg,#fff,#fff4f3)}
+
+/* ═══════ Brief (แบบแอปหุ้น) ═══════ */
+.bf-head{display:flex;align-items:center;gap:10px;margin:4px 2px 12px}
+.bf-head>div{flex:1}
+.bf-t{font-size:22px;font-weight:800}
+.bf-s{font-size:13px;color:var(--muted)}
+.ticker{background:linear-gradient(160deg,#0b1b3f,#13306b);color:#fff;border-radius:22px;padding:16px;box-shadow:0 14px 32px rgba(11,27,63,.35)}
+.tk-row{display:flex;justify-content:space-between;font-size:12.5px;color:#9fb3e0;letter-spacing:.4px}
+.tk-live{color:#4ade80;font-weight:700}
+.tk-price{font-size:38px;font-weight:800;margin-top:4px;letter-spacing:-.5px}
+.tk-chg{font-weight:800;font-size:15px}
+.tk-chg small{color:#9fb3e0;font-weight:500}
+.tk-chg.up{color:#4ade80}.tk-chg.down{color:#ff7b7b}
+#tk-spark{margin:10px -4px 4px}
+.tk-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;border-top:1px solid rgba(255,255,255,.12);padding-top:10px}
+.tk-stats div{min-width:0}
+.tk-stats small{display:block;color:#9fb3e0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk-stats b{font-size:14px;white-space:nowrap}
+@media(max-width:420px){.tk-stats{grid-template-columns:repeat(3,1fr);row-gap:10px}}
+.movers{display:flex;gap:10px;overflow-x:auto;margin:0 -14px;padding:2px 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+.movers::-webkit-scrollbar{display:none}
+.mv{flex:none;width:150px;border-radius:16px;padding:12px;background:#fff;border:1px solid var(--line);scroll-snap-align:start;cursor:pointer;position:relative;overflow:hidden}
+.mv:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.mv.up:before{background:#12a150}.mv.down:before{background:#e0413e}
+.mv-n{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mv-a{font-size:18px;font-weight:800;margin-top:2px}
+.mv-p{display:inline-block;font-weight:800;font-size:13px;border-radius:8px;padding:1px 7px;margin-top:3px}
+.mv.up .mv-p{background:#dcf7e7;color:#0b7a3e}.mv.down .mv-p{background:#ffe3e3;color:#b42318}
+.mv-k{font-size:11.5px;color:var(--muted);margin-top:4px}
+.donut-card{display:flex;gap:14px;align-items:center}
+.donut-card #donut{width:46%;max-width:240px;flex:none}
+.donut-svg{width:100%;display:block}
+.dleg{flex:1;min-width:0;font-size:13.5px}
+.dleg>div{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid #f1f3f8;cursor:pointer}
+.dleg>div:last-child{border-bottom:0}
+.dleg .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dleg .am{color:var(--muted);font-size:12px;width:44px;text-align:right}
+@media(max-width:480px){.donut-card{flex-direction:column}.donut-card #donut{width:66%}.dleg{width:100%}}
+.c-note{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.7}
+.c-note .cl{display:inline-block;width:9px;height:12px;border-radius:2px;vertical-align:-1px;margin:0 3px 0 6px}
+.c-note .cl.up{background:#12a150}.c-note .cl.down{background:#e0413e}
+.c-note .ma-l{display:inline-block;width:16px;border-top:2px dashed #6250d6;vertical-align:3px;margin:0 3px 0 6px}
+
 </style>
 </head>
 <body>
@@ -231,14 +324,14 @@ details.more summary::-webkit-details-marker{display:none}
   </div></header>
   <main>
     <section class="page" id="pg-home"></section>
-    <section class="page hidden" id="pg-sales"></section>
+    <section class="page hidden" id="pg-brief"></section>
     <section class="page hidden" id="pg-debt"></section>
     <section class="page hidden" id="pg-cust"></section>
     <section class="page hidden" id="pg-prod"></section>
   </main>
   <nav class="nav"><div class="nav-in">
     <button data-p="home" class="on"><span class="i">🏠</span>ภาพรวม</button>
-    <button data-p="sales"><span class="i">📈</span>ยอดขาย</button>
+    <button data-p="brief"><span class="i">📰</span>Brief</button>
     <button data-p="debt"><span class="i">💰</span>ลูกหนี้</button>
     <button data-p="cust"><span class="i">👥</span>ลูกค้า<span class="dot hidden"></span></button>
     <button data-p="prod"><span class="i">🦑</span>สินค้า</button>
@@ -607,49 +700,411 @@ function hbars(items, valFn, subFn, lblFn) {
   }).join('');
 }
 
+/* ═════════════════ สี (ชุดสีที่ผ่านการตรวจตาบอดสี · สีตามหมวด ไม่เปลี่ยนตามอันดับ) ═════════════════ */
+var PAL = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#6250d6', '#e34948'];
+var CAT_COLOR = { 'หมึก': '#2a78d6', 'กุ้ง': '#eb6834', 'ปู': '#1baf7a', 'หอย': '#eda100', 'ปลา': '#e87ba4', 'อื่นๆ': '#6250d6' };
+var CAT_ICON = { 'หมึก': '🦑', 'กุ้ง': '🦐', 'ปู': '🦀', 'หอย': '🐚', 'ปลา': '🐟', 'อื่นๆ': '📦' };
+var OTHER_COLOR = '#9aa3b5', UP = '#12a150', DOWN = '#e0413e';
+function catColor(c) { return CAT_COLOR[c] || OTHER_COLOR; }
+var MEDAL = ['🥇', '🥈', '🥉'];
+
+/* ═════════════════ ช่วงเวลา ═════════════════ */
+var PERIODS = [
+  { k: 'day', l: 'วันนี้' }, { k: 'week', l: 'สัปดาห์นี้' }, { k: 'month', l: 'เดือนนี้' }, { k: 'd30', l: '30 วัน' },
+  { k: 'quarter', l: 'ไตรมาส' }, { k: 'year', l: 'ปีนี้' }, { k: 'all', l: 'ทั้งหมด' }
+];
+var homePeriod = 'day', selDay = null;
+function monthsBack(iso, n) { var d = dObj(iso.slice(0, 8) + '01'); d.setMonth(d.getMonth() - n); return isoOf(d); }
+function rangeOf(k, day) {
+  var asOf = M.asOf, f, t = asOf, pf = null, pt = null, title, cmp = '', gran = 'day';
+  if (k === 'day') {
+    f = t = day; pf = pt = addDays(day, -7);
+    title = (day === todayISO() ? 'วันนี้ · ' : '') + 'วัน' + wdOf(day) + ' ' + thaiDate(day); cmp = 'เทียบวัน' + wdOf(day) + 'ที่แล้ว';
+  } else if (k === 'week') {
+    f = weekStart(asOf); pf = addDays(f, -7); pt = addDays(asOf, -7);
+    title = 'สัปดาห์นี้ · ' + thaiShort(f) + ' – ' + thaiShort(asOf); cmp = 'เทียบช่วงเดียวกันสัปดาห์ก่อน';
+  } else if (k === 'month') {
+    f = asOf.slice(0, 8) + '01'; pf = monthsBack(asOf, 1);
+    var pmEnd = isoOf(new Date(dObj(pf).getFullYear(), dObj(pf).getMonth() + 1, 0));
+    pt = pf.slice(0, 8) + pad(Math.min(+asOf.slice(8, 10), +pmEnd.slice(8, 10)));
+    title = 'เดือน' + MTHF[+asOf.slice(5, 7) - 1] + ' ' + (+asOf.slice(0, 4) + 543); cmp = 'เทียบช่วงเดียวกันเดือนก่อน';
+  } else if (k === 'd30') {
+    f = addDays(asOf, -29); pf = addDays(asOf, -59); pt = addDays(asOf, -30);
+    title = '30 วันล่าสุด · ' + thaiShort(f) + ' – ' + thaiShort(asOf); cmp = 'เทียบ 30 วันก่อนหน้า';
+  } else if (k === 'quarter') {
+    var m = +asOf.slice(5, 7), qm = Math.floor((m - 1) / 3) * 3 + 1, q = (qm - 1) / 3 + 1;
+    f = asOf.slice(0, 4) + '-' + pad(qm) + '-01'; pf = monthsBack(f, 3); pt = addDays(pf, diffDays(f, asOf));
+    title = 'ไตรมาส ' + q + '/' + (+asOf.slice(0, 4) + 543); cmp = 'เทียบช่วงเดียวกันไตรมาสก่อน'; gran = 'week';
+  } else if (k === 'year') {
+    f = asOf.slice(0, 4) + '-01-01'; pf = (+asOf.slice(0, 4) - 1) + '-01-01'; pt = (+asOf.slice(0, 4) - 1) + asOf.slice(4);
+    title = 'ปี ' + (+asOf.slice(0, 4) + 543); cmp = 'เทียบช่วงเดียวกันปีก่อน'; gran = 'month';
+  } else {
+    f = M.minIso; title = 'ทั้งหมด · ' + thaiDate(M.minIso) + ' – ' + thaiDate(asOf); gran = 'month';
+  }
+  return { k: k, f: f, t: t, pf: pf, pt: pt, title: title, cmp: cmp, gran: gran };
+}
+/* รวมยอดของช่วง: ยอดขาย บิล ลูกค้า กก. หมวด ลูกค้า สินค้า */
+function statsOf(f, t) {
+  var o = { amt: 0, n: 0, kg: 0, pamt: 0, cust: {}, cats: {}, prods: {} };
+  if (!f) return o;
+  M.bills.forEach(function (b) {
+    if (b.iso < f || b.iso > t) return;
+    o.amt += b.grand; o.n++; o.kg += b.kg;
+    var c = o.cust[b.cust] || (o.cust[b.cust] = { name: b.cust, amt: 0, n: 0 }); c.amt += b.grand; c.n++;
+    b.lines.forEach(function (l) {
+      if (!isProd(l)) return;
+      o.pamt += l.total;
+      var x = o.cats[l.cat] || (o.cats[l.cat] = { name: l.cat, amt: 0, kg: 0 }); x.amt += l.total; x.kg += l.qty;
+      var p = o.prods[l.p] || (o.prods[l.p] = { name: l.p, cat: l.cat, amt: 0, kg: 0 }); p.amt += l.total; p.kg += l.qty;
+    });
+  });
+  o.nc = Object.keys(o.cust).length;
+  o.avg = o.n ? o.amt / o.n : 0;
+  o.custArr = Object.keys(o.cust).map(function (k) { return o.cust[k]; }).sort(function (a, b) { return b.amt - a.amt; });
+  o.catArr = Object.keys(o.cats).map(function (k) { return o.cats[k]; }).sort(function (a, b) { return b.amt - a.amt; });
+  o.prodArr = Object.keys(o.prods).map(function (k) { return o.prods[k]; }).sort(function (a, b) { return b.amt - a.amt; });
+  return o;
+}
+/* ข้อมูลกราฟของช่วง */
+function seriesOf(R) {
+  var map = {}; M.bills.forEach(function (b) { map[b.iso] = (map[b.iso] || 0) + b.grand; });
+  var out = [], i;
+  if (R.k === 'day') {   /* วันเดียว → ดู 14 วันรอบ ๆ ไฮไลต์วันที่เลือก */
+    for (i = 13; i >= 0; i--) { var d0 = addDays(R.f, -i); out.push({ key: d0, v: map[d0] || 0, lbl: String(+d0.slice(8)), tip: 'วัน' + wdOf(d0) + ' ' + thaiShort(d0), hl: d0 === R.f }); }
+  } else if (R.gran === 'day') {
+    for (var d = R.f; d <= R.t; d = addDays(d, 1)) out.push({ key: d, v: map[d] || 0, lbl: String(+d.slice(8)), tip: 'วัน' + wdOf(d) + ' ' + thaiShort(d) });
+  } else if (R.gran === 'week') {
+    for (var w = weekStart(R.f); w <= R.t; w = addDays(w, 7)) {
+      var s = 0, e = addDays(w, 6); for (var x = w; x <= e; x = addDays(x, 1)) if (x >= R.f && x <= R.t) s += map[x] || 0;
+      out.push({ key: w, v: s, lbl: (+w.slice(8)) + '/' + (+w.slice(5, 7)), tip: 'สัปดาห์ ' + thaiShort(w) + ' – ' + thaiShort(e) });
+    }
+  } else {
+    for (var ym = R.f.slice(0, 7); ym <= R.t.slice(0, 7);) {
+      var sm = 0; Object.keys(map).forEach(function (k) { if (k.slice(0, 7) === ym && k >= R.f && k <= R.t) sm += map[k]; });
+      out.push({ key: ym, v: sm, lbl: thaiMonthS(ym), tip: thaiMonth(ym) });
+      var dd = dObj(ym + '-01'); dd.setMonth(dd.getMonth() + 1); ym = isoOf(dd).slice(0, 7);
+    }
+  }
+  return out;
+}
+function chgLight(cur, prev) {   /* ป้ายเปลี่ยนแปลงบนพื้นเข้ม */
+  var p = pct(cur, prev);
+  if (p === null) return '<span class="chip-d up">ใหม่</span>';
+  var up = p >= 0;
+  return '<span class="chip-d ' + (Math.abs(p) < 0.5 ? 'flat' : up ? 'up' : 'down') + '">' + (up ? '▲' : '▼') + ' ' + Math.abs(p).toFixed(Math.abs(p) < 10 ? 1 : 0) + '%</span>';
+}
+
 /* ═════════════════ หน้า 1: ภาพรวม ═════════════════ */
-var selDay = null;
 function renderHome() {
   var asOf = M.asOf; if (!selDay) selDay = asOf;
-  var d = selDay, day = sumRange(d, d), lw = sumRange(addDays(d, -7), addDays(d, -7));
+  var R = rangeOf(homePeriod, selDay), S = statsOf(R.f, R.t), P = R.pf ? statsOf(R.pf, R.pt) : null;
   var h = '';
-  h += '<div class="daynav"><button id="dprev" aria-label="วันก่อนหน้า">‹</button><div class="d">' + (d === todayISO() ? 'วันนี้ · ' : '') + 'วัน' + wdOf(d) + ' ' + thaiDate(d) + '<small>แตะเพื่อเลือกวันที่</small><input type="date" id="dpick" value="' + d + '" max="' + asOf + '"></div><button id="dnext" aria-label="วันถัดไป"' + (d >= asOf ? ' disabled' : '') + '>›</button></div>';
-  h += '<div class="card hero"><div class="lbl">ยอดขายวัน' + wdOf(d) + '</div><div class="big num">' + baht(day.amt) + '</div>';
-  h += '<div class="meta">' + chg(day.amt, lw.amt) + ' เทียบวัน' + wdOf(d) + 'ที่แล้ว (' + baht(lw.amt) + ')</div>';
-  h += '<div class="meta" style="margin-top:8px">🧾 ' + day.n + ' บิล · 👥 ' + day.nc + ' ลูกค้า · ⚖️ ' + fmtN(day.kg) + ' กก.</div></div>';
+  /* หัวแบรนด์ */
+  h += '<section class="brand">';
+  h += '<div class="brand-top"><img class="logo" src="' + LOGO + '" alt=""><div><div class="b-shop">แพหมึกดำรงค์ ทะเลไทย</div><div class="b-title">รายงานยอดขาย</div></div></div>';
+  h += '<div class="chips" id="pchips">' + PERIODS.map(function (p) { return '<button data-k="' + p.k + '"' + (p.k === homePeriod ? ' class="on"' : '') + '>' + p.l + '</button>'; }).join('') + '</div>';
+  if (homePeriod === 'day') {
+    h += '<div class="b-day"><button id="dprev" aria-label="วันก่อนหน้า">‹</button><label class="b-date">' + esc(R.title) + ' ▾<input type="date" id="dpick" value="' + selDay + '" max="' + asOf + '"></label><button id="dnext" aria-label="วันถัดไป"' + (selDay >= asOf ? ' disabled' : '') + '>›</button></div>';
+  } else h += '<div class="b-day"><span class="b-date">' + esc(R.title) + '</span></div>';
+  h += '<div class="b-lbl">ยอดขาย</div><div class="b-big num">' + baht(S.amt) + '</div>';
+  h += '<div class="b-cmp">' + (P ? chgLight(S.amt, P.amt) + ' <span>' + esc(R.cmp) + ' (' + baht(P.amt) + ')</span>' : '<span>ตั้งแต่เริ่มใช้ระบบ</span>') + '</div>';
+  if (homePeriod === 'day' && !S.n) {
+    var lastDay = null; for (var i = M.bills.length - 1; i >= 0; i--) if (M.bills[i].iso < selDay) { lastDay = M.bills[i].iso; break; }
+    if (lastDay) h += '<button class="b-hint" id="golast">ยังไม่มีบิลวันนี้ · ดูวันที่มียอดล่าสุด (' + thaiShort(lastDay) + ') ›</button>';
+  }
+  h += '</section>';
 
-  /* เดือนนี้ vs เดือนก่อน (ช่วงวันเดียวกัน) */
-  var ym = d.slice(0, 7), mFrom = ym + '-01', dd = +d.slice(8, 10);
-  var pm = dObj(mFrom); pm.setMonth(pm.getMonth() - 1); var pmIso = isoOf(pm), pmDays = new Date(pm.getFullYear(), pm.getMonth() + 1, 0).getDate();
-  var pTo = pmIso.slice(0, 8) + pad(Math.min(dd, pmDays));
-  var mt = sumRange(mFrom, d), pmt = sumRange(pmIso, pTo);
-  var totalRem = 0, over30 = 0, nDebt = 0; Object.keys(M.custs).forEach(function (k) { var c = M.custs[k]; if (c.rem > 0) { nDebt++; totalRem += c.rem; c.unpaid.forEach(function (b) { if (diffDays(b.iso, asOf) > 30) over30 += b.rem; }); } });
-  h += '<div class="grid g2" style="margin-top:12px">';
-  h += '<div class="card tile"><div class="lbl">เดือน' + MTHF[+ym.slice(5) - 1] + ' (1–' + dd + ')</div><div class="val num">' + baht(mt.amt) + '</div><div class="sub">' + chg(mt.amt, pmt.amt) + ' เทียบ 1–' + Math.min(dd, pmDays) + ' ' + MTH[pm.getMonth()] + '</div></div>';
-  h += '<div class="card tile click" data-go="debt"><div class="lbl">หนี้ค้างรับทั้งหมด</div><div class="val num" style="color:var(--bad)">' + baht(totalRem) + '</div><div class="sub">' + nDebt + ' ราย · เกิน 30 วัน ' + baht(over30) + ' ›</div></div>';
-  h += '</div>';
+  /* KPI 4 ช่อง */
+  function k(cls, ic, l, v, cur, prev) { return '<div class="kpi ' + cls + '"><div class="k-l">' + ic + ' ' + l + '</div><div class="k-v num">' + v + '</div>' + (P ? '<div class="k-s">' + chg(cur, prev) + '</div>' : '') + '</div>'; }
+  h += '<div class="kpis">' +
+    k('kb', '👥', 'ลูกค้าที่ซื้อ', fmt0(S.nc) + ' <small>ราย</small>', S.nc, P && P.nc) +
+    k('kv', '🧾', 'จำนวนบิล', fmt0(S.n) + ' <small>ใบ</small>', S.n, P && P.n) +
+    k('kg', '📈', 'เฉลี่ย/บิล', '฿' + fmt0(S.avg), S.avg, P && P.avg) +
+    k('ko', '⚖️', 'น้ำหนักรวม', fmt0(S.kg) + ' <small>กก.</small>', S.kg, P && P.kg) + '</div>';
+  h += '<div class="acts2"><button class="btn pri" id="cp-rep">📋 คัดลอกรายงาน</button><button class="btn sec" id="go-brief">📰 Brief ประจำวัน</button></div>';
 
-  /* กราฟ 30 วัน */
-  h += '<div class="sec-t">ยอดขาย 30 วัน <small>แตะแท่งเพื่อดูวันนั้น</small></div><div class="card"><div id="ch-home"></div></div>';
+  /* กราฟ */
+  h += '<div class="sec-t">📊 ยอดขาย' + ({ day: ' 14 วัน', week: 'รายวัน', month: 'รายวัน', d30: 'รายวัน', quarter: 'รายสัปดาห์', year: 'รายเดือน', all: 'รายเดือน' })[homePeriod] + (homePeriod === 'day' ? ' <small>แตะแท่งเพื่อดูวันนั้น</small>' : '') + '</div><div class="card"><div id="ch-home"></div></div>';
 
-  /* เรื่องที่ควรดู */
-  h += '<div class="sec-t">💡 เรื่องที่ควรดู</div><div class="list" id="ins"></div>';
+  /* หมวด */
+  h += '<div class="sec-t">🍱 สัดส่วนตามหมวด <small>ไม่รวมค่าส่ง/กล่อง</small></div><div class="card">' + catBlock(S) + '</div>';
 
-  /* บิลของวัน */
-  var dayBills = M.bills.filter(function (b) { return b.iso === d; }).sort(function (a, b) { return b.grand - a.grand; });
-  h += '<div class="sec-t">🧾 บิลวันนี้ <small>' + dayBills.length + ' ใบ</small></div>';
-  h += '<div class="list">' + (dayBills.length ? dayBills.map(billRow).join('') : '<div class="empty">ยังไม่มีบิลในวันนี้</div>') + '</div>';
+  /* Top 5 */
+  h += '<div class="wide2"><div><div class="sec-t">🏆 ลูกค้าสูงสุด</div><div class="card">' + rankList(S.custArr.slice(0, 5), function (x) { return x.n + ' บิล'; }, 'cust') + '</div></div>';
+  h += '<div><div class="sec-t">🦑 สินค้าขายดี</div><div class="card">' + rankList(S.prodArr.slice(0, 5), function (x) { return fmt0(x.kg) + ' กก.'; }, 'prod') + '</div></div></div>';
+
+  /* หนี้ + เรื่องที่ควรดู */
+  var totalRem = 0, over30 = 0, nDebt = 0; Object.keys(M.custs).forEach(function (kk) { var c = M.custs[kk]; if (c.rem > 0) { nDebt++; totalRem += c.rem; c.unpaid.forEach(function (b) { if (diffDays(b.iso, asOf) > 30) over30 += b.rem; }); } });
+  h += '<div class="sec-t">💡 เรื่องที่ควรดู</div>';
+  h += '<div class="card tile click debt-tile" data-go="debt"><div class="lbl">💰 หนี้ค้างรับทั้งหมด</div><div class="val num" style="color:var(--bad)">' + baht(totalRem) + '</div><div class="sub">' + nDebt + ' ราย · เกิน 30 วัน ' + baht(over30) + ' · แตะเพื่อดู ›</div></div>';
+  h += '<div class="list" id="ins" style="margin-top:10px"></div>';
+
+  if (homePeriod === 'day') {
+    var dayBills = M.bills.filter(function (b) { return b.iso === selDay; }).sort(function (a, b) { return b.grand - a.grand; });
+    h += '<div class="sec-t">🧾 บิลของวัน <small>' + dayBills.length + ' ใบ</small></div>';
+    h += '<div class="list">' + (dayBills.length ? dayBills.map(billRow).join('') : '<div class="empty">ยังไม่มีบิลในวันนี้</div>') + '</div>';
+  }
   $('pg-home').innerHTML = h;
 
-  barChart($('ch-home'), dailySeries(d, 30).map(function (x) { return { key: x.key, v: x.v, lbl: String(+x.key.slice(8)), tip: 'วัน' + wdOf(x.key) + ' ' + thaiShort(x.key), hl: x.key === d }; }), {
-    label: 'ยอดขาย 30 วัน', onPick: function (x) { selDay = x.key; renderHome(); }
-  });
-  $('dprev').onclick = function () { selDay = addDays(d, -1); renderHome(); };
-  $('dnext').onclick = function () { if (d < asOf) { selDay = addDays(d, 1); renderHome(); } };
-  $('dpick').onchange = function () { if (this.value) { selDay = this.value > asOf ? asOf : this.value; renderHome(); } };
+  barChart($('ch-home'), seriesOf(R), { h: 200, label: 'ยอดขาย', onPick: homePeriod === 'day' ? function (x) { selDay = x.key; renderHome(); } : null });
+  $('pchips').querySelectorAll('button').forEach(function (b) { b.onclick = function () { homePeriod = b.getAttribute('data-k'); if (homePeriod === 'day') selDay = M.asOf; renderHome(); }; });
+  var on = $('pchips').querySelector('.on'); if (on && on.scrollIntoView) { try { on.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) { } }
+  if (homePeriod === 'day') {
+    $('dprev').onclick = function () { selDay = addDays(selDay, -1); renderHome(); };
+    $('dnext').onclick = function () { if (selDay < asOf) { selDay = addDays(selDay, 1); renderHome(); } };
+    $('dpick').onchange = function () { if (this.value) { selDay = this.value > asOf ? asOf : this.value; renderHome(); } };
+    if ($('golast')) $('golast').onclick = function () { selDay = lastDay; renderHome(); };
+  }
+  $('cp-rep').onclick = function () { copyImage(function () { return reportCanvas(R, S, P); }, 'รายงานยอดขาย-' + R.f + (R.f !== R.t ? '_' + R.t : '') + '.png', this); };
+  $('go-brief').onclick = function () { briefDay = homePeriod === 'day' ? selDay : null; go('brief'); };
   bindRows($('pg-home'));
+  window.scrollTo(0, 0);
   renderInsights();
 }
+function catBlock(S) {
+  var tot = S.catArr.reduce(function (s, x) { return s + x.amt; }, 0);
+  if (!tot) return '<div class="empty" style="padding:14px">ไม่มีข้อมูล</div>';
+  var bar = '<div class="catbar">' + S.catArr.map(function (x) { return '<i style="width:' + (x.amt / tot * 100) + '%;background:' + catColor(x.name) + '" title="' + esc(x.name) + '"></i>'; }).join('') + '</div>';
+  var leg = '<div class="catleg">' + S.catArr.map(function (x) {
+    return '<div><span class="sw" style="background:' + catColor(x.name) + '"></span><b>' + (CAT_ICON[x.name] || '') + ' ' + esc(x.name) + '</b><span class="pc">' + (x.amt / tot * 100).toFixed(1) + '%</span><span class="am num">' + baht(x.amt) + '</span></div>';
+  }).join('') + '</div>';
+  return bar + leg;
+}
+function rankList(arr, subFn, kind) {
+  if (!arr.length) return '<div class="empty" style="padding:14px">ไม่มีข้อมูล</div>';
+  return '<div class="rank">' + arr.map(function (x, i) {
+    var attr = kind === 'cust' ? ' data-cust="' + esc(x.name) + '"' : ' data-prod="' + esc(x.name) + '"';
+    return '<div class="rk"' + attr + '><span class="md">' + (MEDAL[i] || (i + 1) + '.') + '</span><span class="nm">' + esc(x.name) + '<small>' + subFn(x) + '</small></span><span class="am num">' + baht(x.amt) + '</span></div>';
+  }).join('') + '</div>';
+}
+
+/* ═════════════════ รูป "สรุปยอดขาย" สำหรับคัดลอก ═════════════════ */
+function reportCardHTML(R, S, P) {
+  var C = "font-family:'Sarabun',sans-serif;";
+  var h = "<div style=\"width:540px;background:#fff;" + C + "color:#1a2340;line-height:normal\">";
+  h += "<div style='background:linear-gradient(160deg,#1a3a8f,#2855b8);padding:22px 24px 46px;text-align:center'>";
+  h += "<img src='" + LOGO + "' style='width:64px;height:64px;border-radius:50%;background:#fff;padding:3px;object-fit:contain'>";
+  h += "<div style='font-size:13px;color:#aac4ff;letter-spacing:1px;margin-top:6px'>แพหมึกดำรงค์ ทะเลไทย</div>";
+  h += "<div style='font-size:24px;font-weight:800;color:#fff;margin-top:2px'>สรุปยอดขาย</div>";
+  h += "<div style='font-size:14px;color:#dce6ff;margin-top:2px'>" + esc(R.title) + (R.k !== 'day' && R.k !== 'all' ? '<br>' + thaiDate(R.f) + ' – ' + thaiDate(R.t) : '') + "</div></div>";
+  h += "<div style='background:#fff;border-radius:22px 22px 0 0;margin-top:-26px;padding:20px 22px 16px'>";
+  function box(l, v, col, cur, prev) {
+    var c = '';
+    if (P) { var p = pct(cur, prev); c = p === null ? '' : "<div style='font-size:11px;margin-top:2px;color:" + (p >= 0 ? UP : DOWN) + ";font-weight:700'>" + (p >= 0 ? '▲' : '▼') + ' ' + Math.abs(p).toFixed(1) + "%</div>"; }
+    return "<div style='background:#eef3ff;border-radius:14px;padding:12px 8px;text-align:center'><div style='font-size:12px;color:#5b6b82'>" + l + "</div><div style='font-size:22px;font-weight:800;color:" + col + "'>" + v + "</div>" + c + "</div>";
+  }
+  h += "<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px'>" +
+    box('ยอดขายรวม', '฿' + fmtN(S.amt), '#1a3a8f', S.amt, P && P.amt) + box('จำนวนบิล', fmt0(S.n) + ' ใบ', '#1a3a8f', S.n, P && P.n) +
+    box('เฉลี่ย/บิล', '฿' + fmt0(S.avg), '#0F6E56', S.avg, P && P.avg) + box('น้ำหนักรวม', fmt0(S.kg) + ' กก.', '#1a3a8f', S.kg, P && P.kg) + "</div>";
+  if (P) h += "<div style='font-size:11px;color:#8896bb;text-align:center;margin-top:6px'>% = " + esc(R.cmp) + "</div>";
+  var tot = S.catArr.reduce(function (s, x) { return s + x.amt; }, 0);
+  if (tot) {
+    h += "<div style='font-size:13px;font-weight:700;color:#1a3a8f;margin:16px 0 6px'>📊 สัดส่วนตามหมวด</div>";
+    h += "<div style='display:flex;height:16px;border-radius:8px;overflow:hidden'>" + S.catArr.map(function (x) { return "<div style='width:" + (x.amt / tot * 100) + "%;background:" + catColor(x.name) + "'></div>"; }).join('') + "</div>";
+    h += "<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 10px;margin-top:8px;font-size:12px'>" + S.catArr.map(function (x) {
+      return "<div><span style='display:inline-block;width:10px;height:10px;border-radius:3px;background:" + catColor(x.name) + ";margin-right:5px'></span>" + esc(x.name) + " <b>" + (x.amt / tot * 100).toFixed(0) + "%</b></div>";
+    }).join('') + "</div>";
+  }
+  function list(t, arr) {
+    var s = "<div><div style='font-size:13px;font-weight:700;color:#1a3a8f;margin-bottom:4px'>" + t + "</div>";
+    arr.slice(0, 5).forEach(function (x, i) { s += "<div style='display:flex;justify-content:space-between;gap:6px;font-size:13px;padding:4px 0;border-bottom:1px solid #f0f3fa'><span style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis'>" + (MEDAL[i] || (i + 1) + '.') + ' ' + esc(x.name) + "</span><b style='white-space:nowrap'>฿" + fmt0(x.amt) + "</b></div>"; });
+    if (!arr.length) s += "<div style='font-size:12px;color:#8896bb'>ไม่มีข้อมูล</div>";
+    return s + "</div>";
+  }
+  h += "<div style='display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px'>" + list('🏆 ลูกค้าสูงสุด', S.custArr) + list('🦑 สินค้าขายดี', S.prodArr) + "</div>";
+  h += "<div style='text-align:center;font-size:11px;color:#aab3c8;margin-top:16px'>สร้างเมื่อ " + thaiDate(todayISO()) + " " + hm(Date.now()) + " น. · หลังบ้านดำรงค์</div>";
+  return h + "</div></div>";
+}
+function reportCanvas(R, S, P) { return cardCanvas(reportCardHTML(R, S, P), 540); }
+
+/* ═════════════════ หน้า 2: Brief ประจำวัน (แบบแอปหุ้น) ═════════════════ */
+var briefDay = null, briefMoverTab = 'up';
+function tradingDays() { var s = {}; M.bills.forEach(function (b) { s[b.iso] = 1; }); return Object.keys(s).sort(); }
+function renderBrief() {
+  var days = tradingDays(), asOf = M.asOf;
+  if (!briefDay || briefDay > asOf) { briefDay = null; for (var i = days.length - 1; i >= 0; i--) if (days[i] <= asOf) { briefDay = days[i]; break; } }
+  if (!briefDay) { $('pg-brief').innerHTML = '<div class="empty">ยังไม่มีข้อมูล</div>'; return; }
+  var d = briefDay, S = statsOf(d, d);
+  var idx = days.indexOf(d), prevDay = idx > 0 ? days[idx - 1] : (function () { for (var j = days.length - 1; j >= 0; j--) if (days[j] < d) return days[j]; return null; })();
+  var PS = prevDay ? statsOf(prevDay, prevDay) : null;
+  var prev7 = days.filter(function (x) { return x < d; }).slice(-7);
+  var base = {}; prev7.forEach(function (x) { var s = statsOf(x, x); s.prodArr.forEach(function (p) { base[p.name] = (base[p.name] || 0) + p.amt / prev7.length; }); });
+  var avg7 = prev7.length ? prev7.reduce(function (s, x) { return s + statsOf(x, x).amt; }, 0) / prev7.length : 0;
+  var ppk = S.kg ? S.pamt / S.kg : 0;
+
+  var h = '<div class="bf-head"><div><div class="bf-t">📰 Daily Brief</div><div class="bf-s">สรุปตลาดประจำวัน · แพหมึกดำรงค์</div></div><button class="btn pri sm" id="cp-brief">📋 คัดลอก Brief</button></div>';
+  h += '<div class="daynav"><button id="bprev" aria-label="วันก่อนหน้า"' + (idx <= 0 ? ' disabled' : '') + '>‹</button><div class="d">วัน' + wdOf(d) + ' ' + thaiDate(d) + '<small>แตะเพื่อเลือกวันที่</small><input type="date" id="bpick" value="' + d + '" max="' + asOf + '"></div><button id="bnext" aria-label="วันถัดไป"' + (idx < 0 || idx >= days.length - 1 || days[idx + 1] > asOf ? ' disabled' : '') + '>›</button></div>';
+
+  /* ticker */
+  var up = !PS || S.amt >= PS.amt;
+  h += '<section class="ticker"><div class="tk-row"><span class="tk-sym">DAMRONG · ยอดขาย</span><span class="tk-live">' + (d === todayISO() ? '● วันนี้' : 'ปิดวัน') + '</span></div>';
+  h += '<div class="tk-price num">' + baht(S.amt) + '</div>';
+  h += '<div class="tk-chg ' + (up ? 'up' : 'down') + '">' + (PS ? (up ? '▲ +' : '▼ ') + baht(S.amt - PS.amt).replace('฿-', '-฿') + ' (' + (pct(S.amt, PS.amt) >= 0 ? '+' : '') + (pct(S.amt, PS.amt) || 0).toFixed(2) + '%) <small>เทียบ ' + thaiShort(prevDay) + '</small>' : 'วันแรกในระบบ') + '</div>';
+  h += '<div id="tk-spark"></div>';
+  h += '<div class="tk-stats"><div><small>บิล</small><b>' + S.n + '</b></div><div><small>ลูกค้า</small><b>' + S.nc + '</b></div><div><small>น้ำหนัก</small><b>' + fmt0(S.kg) + ' กก.</b></div><div><small>฿/กก. เฉลี่ย</small><b>' + fmt0(ppk) + '</b></div><div><small>เฉลี่ย 7 วัน</small><b>' + short(avg7) + '</b></div></div></section>';
+
+  /* movers */
+  var mv = S.prodArr.map(function (p) { return { name: p.name, cat: p.cat, amt: p.amt, kg: p.kg, base: base[p.name] || 0 }; });
+  Object.keys(base).forEach(function (k) { if (!S.prods[k] && base[k] >= 1500) mv.push({ name: k, cat: getCatOf(k), amt: 0, kg: 0, base: base[k] }); });
+  mv.forEach(function (x) { x.d = x.amt - x.base; x.p = x.base ? (x.amt - x.base) / x.base * 100 : null; });
+  var gain = mv.filter(function (x) { return x.d > 0 && x.amt >= 1000; }).sort(function (a, b) { return b.d - a.d; }).slice(0, 8);
+  var lose = mv.filter(function (x) { return x.d < 0 && x.base >= 1500; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 8);
+  h += '<div class="sec-t">🚀 สินค้าขึ้น/ลงแรง <small>เทียบค่าเฉลี่ย ' + prev7.length + ' วันทำการก่อนหน้า</small></div>';
+  h += '<div class="seg" id="mvtab"><button data-t="up">▲ ขึ้นแรง</button><button data-t="down">▼ ลงแรง</button></div>';
+  var L = briefMoverTab === 'up' ? gain : lose;
+  h += '<div class="movers">' + (L.length ? L.map(function (x) {
+    var u = x.d >= 0;
+    return '<div class="mv ' + (u ? 'up' : 'down') + '" data-prod="' + esc(x.name) + '"><div class="mv-n">' + esc(x.name) + '</div><div class="mv-a num">' + baht(x.amt) + '</div><div class="mv-p">' + (x.p === null ? 'ใหม่' : (u ? '▲ +' : '▼ ') + x.p.toFixed(0) + '%') + '</div><div class="mv-k">' + fmt0(x.kg) + ' กก. · ปกติ ~' + short(x.base) + '</div></div>';
+  }).join('') : '<div class="empty" style="padding:14px">ไม่มี</div>') + '</div>';
+
+  /* donut */
+  h += '<div class="sec-t">🍩 สินค้าขายดีของวัน</div><div class="card donut-card"><div id="donut"></div><div class="dleg" id="dleg"></div></div>';
+
+  /* candle */
+  h += '<div class="sec-t">🕯️ ดัชนียอดขายรายสัปดาห์ <small>แท่งเทียน 16 สัปดาห์</small></div><div class="card"><div id="candle"></div>' +
+    '<div class="c-note"><span class="cl up"></span>ปิดสูงกว่าเปิด <span class="cl down"></span>ปิดต่ำกว่าเปิด · ตัวแท่ง = ยอดวันแรก→วันสุดท้ายของสัปดาห์ · ไส้ = วันขายดีสุด/น้อยสุด · <span class="ma-l"></span> เฉลี่ย 4 สัปดาห์ · แท่งล่าง = จำนวนบิล</div></div>';
+
+  /* หมวด + ลูกค้า */
+  h += '<div class="sec-t">🍱 หมวดสินค้าวันนี้</div><div class="card">' + catBlock(S) + '</div>';
+  h += '<div class="sec-t">🏆 ลูกค้าของวัน</div><div class="card">' + rankList(S.custArr.slice(0, 5), function (x) { return x.n + ' บิล'; }, 'cust') + '</div>';
+  $('pg-brief').innerHTML = h;
+
+  /* ผูกปุ่ม + วาดกราฟ */
+  $('bprev').onclick = function () { if (idx > 0) { briefDay = days[idx - 1]; renderBrief(); } };
+  $('bnext').onclick = function () { if (idx >= 0 && idx < days.length - 1) { briefDay = days[idx + 1]; renderBrief(); } };
+  $('bpick').onchange = function () { if (this.value) { briefDay = this.value; renderBrief(); } };
+  $('mvtab').querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-t') === briefMoverTab); b.onclick = function () { briefMoverTab = b.getAttribute('data-t'); renderBrief(); }; });
+  $('cp-brief').onclick = function () { copyImage(function () { return briefCanvas(d, S, PS, prevDay, gain, lose); }, 'Brief-' + d + '.png', this); };
+  sparkline($('tk-spark'), dailySeries(d, 30).map(function (x) { return x.v; }), up);
+  var sl = donutSlices(S);
+  donutSVG($('donut'), sl, baht(S.pamt), 'ยอดสินค้า');
+  $('dleg').innerHTML = sl.map(function (x) { return '<div' + (x.other ? '' : ' data-prod="' + esc(x.name) + '"') + '><span class="sw" style="background:' + x.c + '"></span><span class="nm">' + esc(x.name) + '</span><b>' + x.pc.toFixed(1) + '%</b><span class="am num">' + short(x.v) + '</span></div>'; }).join('');
+  candleChart($('candle'), weeklyCandles(d, 16));
+  bindRows($('pg-brief'));
+}
+function donutSlices(S) {
+  var tot = S.pamt || 1, top = S.prodArr.slice(0, 7), rest = S.prodArr.slice(7).reduce(function (s, x) { return s + x.amt; }, 0);
+  var sl = top.map(function (x, i) { return { name: x.name, v: x.amt, c: PAL[i], pc: x.amt / tot * 100 }; });
+  if (rest > 0) sl.push({ name: 'อื่น ๆ (' + (S.prodArr.length - 7) + ' รายการ)', v: rest, c: OTHER_COLOR, pc: rest / tot * 100, other: true });
+  return sl;
+}
+function weeklyCandles(endDay, n) {
+  var map = {}, bills = {}; M.bills.forEach(function (b) { if (b.iso <= endDay) { map[b.iso] = (map[b.iso] || 0) + b.grand; bills[b.iso] = (bills[b.iso] || 0) + 1; } });
+  var out = [], ws = weekStart(endDay);
+  for (var i = n - 1; i >= 0; i--) {
+    var w = addDays(ws, -7 * i), vals = [], nb = 0;
+    for (var j = 0; j < 7; j++) { var x = addDays(w, j); if (x <= endDay && map[x]) { vals.push(map[x]); nb += bills[x]; } }
+    if (!vals.length) continue;
+    out.push({ w: w, o: vals[0], c: vals[vals.length - 1], h: Math.max.apply(null, vals), l: Math.min.apply(null, vals), avg: vals.reduce(function (s, v) { return s + v; }, 0) / vals.length, nd: vals.length, vol: nb });
+  }
+  out.forEach(function (c, i) { var s = out.slice(Math.max(0, i - 3), i + 1); c.ma = s.reduce(function (a, b) { return a + b.avg; }, 0) / s.length; });
+  return out;
+}
+
+/* ── กราฟเล็ก ── */
+function sparkline(el, vals, up) {
+  var W = 600, H = 70, max = Math.max.apply(null, vals.concat([1])), n = vals.length;
+  var pts = vals.map(function (v, i) { return [i / (n - 1) * W, H - 4 - (v / max) * (H - 10)]; });
+  var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join('');
+  var col = up ? UP : DOWN;
+  el.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" style="width:100%;height:64px;display:block"><defs><linearGradient id="spg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".45"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>' +
+    '<path d="' + line + 'L' + W + ',' + H + 'L0,' + H + 'Z" fill="url(#spg)"/><path d="' + line + '" fill="none" stroke="' + col + '" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>';
+}
+function arcPath(cx, cy, r0, r1, a0, a1) {
+  var la = a1 - a0 > Math.PI ? 1 : 0, c = Math.cos, s = Math.sin;
+  return 'M' + (cx + r1 * c(a0)) + ',' + (cy + r1 * s(a0)) + 'A' + r1 + ',' + r1 + ' 0 ' + la + ' 1 ' + (cx + r1 * c(a1)) + ',' + (cy + r1 * s(a1)) +
+    'L' + (cx + r0 * c(a1)) + ',' + (cy + r0 * s(a1)) + 'A' + r0 + ',' + r0 + ' 0 ' + la + ' 0 ' + (cx + r0 * c(a0)) + ',' + (cy + r0 * s(a0)) + 'Z';
+}
+function donutSVG(el, sl, center, sub) {
+  var tot = sl.reduce(function (s, x) { return s + x.v; }, 0);
+  if (!tot) { el.innerHTML = '<div class="empty">ไม่มีข้อมูล</div>'; return; }
+  var a = -Math.PI / 2, gap = sl.length > 1 ? 0.012 : 0, s = '<svg viewBox="0 0 220 220" class="donut-svg" role="img" aria-label="สัดส่วนสินค้าขายดี">';
+  sl.forEach(function (x, i) {
+    var da = x.v / tot * Math.PI * 2, a1 = a + da;
+    if (da >= Math.PI * 2 - 0.001) s += '<circle cx="110" cy="110" r="84" fill="none" stroke="' + x.c + '" stroke-width="36"/>';
+    else s += '<path d="' + arcPath(110, 110, 66, 102, a + gap, a1 - gap) + '" fill="' + x.c + '"><title>' + esc(x.name) + ' ' + x.pc.toFixed(1) + '%</title></path>';
+    a = a1;
+  });
+  s += '<text x="110" y="106" text-anchor="middle" font-size="19" font-weight="800" fill="#14213d">' + esc(center) + '</text><text x="110" y="128" text-anchor="middle" font-size="12" fill="#8a93ab">' + esc(sub) + '</text></svg>';
+  el.innerHTML = s;
+}
+function candleChart(el, cs) {
+  if (!cs.length) { el.innerHTML = '<div class="empty">ไม่มีข้อมูล</div>'; return; }
+  var W = Math.max(320, el.clientWidth || 600), H = 250, padL = 42, padR = 8, top = 10, ph = 160, vTop = 190, vh = 40;
+  var hi = Math.max.apply(null, cs.map(function (c) { return c.h; })), lo = Math.min.apply(null, cs.map(function (c) { return c.l; }));
+  var span = (hi - lo) || hi || 1; hi += span * 0.08; lo = Math.max(0, lo - span * 0.08);
+  var y = function (v) { return top + ph - (v - lo) / (hi - lo) * ph; };
+  var vmax = Math.max.apply(null, cs.map(function (c) { return c.vol; })) || 1;
+  var iw = W - padL - padR, bw = iw / cs.length, cw = Math.max(4, Math.min(18, bw * 0.55));
+  var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" style="width:100%;display:block" role="img" aria-label="แท่งเทียนยอดขายรายสัปดาห์">';
+  for (var g = 0; g <= 3; g++) { var gv = lo + (hi - lo) * g / 3, gy = y(gv); s += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + gy + '" y2="' + gy + '" stroke="#eef1f6"/><text x="' + (padL - 5) + '" y="' + (gy + 4) + '" text-anchor="end" font-size="10.5" fill="#8a93ab">' + short(gv) + '</text>'; }
+  var ma = '';
+  cs.forEach(function (c, i) {
+    var x = padL + i * bw + bw / 2, up = c.c >= c.o, col = up ? UP : DOWN;
+    var yo = y(c.o), yc = y(c.c), bt = Math.min(yo, yc), bh = Math.max(2, Math.abs(yo - yc));
+    s += '<line x1="' + x + '" x2="' + x + '" y1="' + y(c.h) + '" y2="' + y(c.l) + '" stroke="' + col + '" stroke-width="1.6"/>';
+    s += '<rect x="' + (x - cw / 2) + '" y="' + bt + '" width="' + cw + '" height="' + bh + '" rx="2" fill="' + (up ? col : col) + '" ' + (up ? 'fill-opacity=".9"' : '') + '/>';
+    var vh0 = c.vol / vmax * vh; s += '<rect x="' + (x - cw / 2) + '" y="' + (vTop + vh - vh0) + '" width="' + cw + '" height="' + vh0 + '" rx="1.5" fill="' + col + '" fill-opacity=".35"/>';
+    ma += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y(c.ma).toFixed(1);
+    var stp = Math.ceil(cs.length / 7), last = cs.length - 1; if ((i % stp === 0 && last - i >= Math.ceil(stp / 2)) || i === last) s += '<text x="' + x + '" y="' + (H - 4) + '" text-anchor="middle" font-size="10.5" fill="#8a93ab">' + (+c.w.slice(8)) + '/' + (+c.w.slice(5, 7)) + '</text>';
+    s += '<rect class="hit" data-i="' + i + '" x="' + (padL + i * bw) + '" y="0" width="' + bw + '" height="' + (H - 14) + '" fill="transparent" style="cursor:pointer"/>';
+  });
+  s += '<path d="' + ma + '" fill="none" stroke="#6250d6" stroke-width="2" stroke-dasharray="5 3"/>';
+  s += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + (vTop - 6) + '" y2="' + (vTop - 6) + '" stroke="#e3e7ef"/></svg><div class="tt hidden"></div>';
+  el.innerHTML = s; el.classList.add('chart');
+  var tt = el.querySelector('.tt');
+  var show = function (e) {
+    var t = e.target; if (!t.classList || !t.classList.contains('hit')) return;
+    var i = +t.getAttribute('data-i'), c = cs[i], x = (padL + i * bw + bw / 2) / W * el.clientWidth;
+    tt.innerHTML = 'สัปดาห์ ' + thaiShort(c.w) + ' – ' + thaiShort(addDays(c.w, 6)) + ' (' + c.nd + ' วัน)<br>เปิด <b>' + short(c.o) + '</b> · ปิด <b>' + short(c.c) + '</b><br>สูงสุด ' + short(c.h) + ' · ต่ำสุด ' + short(c.l) + '<br>เฉลี่ย/วัน ' + short(c.avg) + ' · ' + c.vol + ' บิล';
+    tt.style.left = Math.min(Math.max(x, 110), el.clientWidth - 110) + 'px'; tt.style.top = (y(c.h) / H * el.querySelector('svg').getBoundingClientRect().height) + 'px'; tt.classList.remove('hidden');
+  };
+  el.onmousemove = show; el.onclick = show; el.onmouseleave = function () { tt.classList.add('hidden'); };
+}
+/* donut บน canvas (ใช้ในรูปที่คัดลอก — html2canvas วาด SVG ได้ไม่ครบ) */
+function drawDonut(cv, sl, center, sub) {
+  var ctx = cv.getContext('2d'), sc = 2, W = cv.width = 200 * sc, H = cv.height = 200 * sc;
+  cv.style.width = '200px'; cv.style.height = '200px';
+  var tot = sl.reduce(function (s, x) { return s + x.v; }, 0) || 1, a = -Math.PI / 2;
+  ctx.scale(sc, sc);
+  sl.forEach(function (x) {
+    var a1 = a + x.v / tot * Math.PI * 2;
+    ctx.beginPath(); ctx.arc(100, 100, 92, a + 0.012, a1 - 0.012); ctx.arc(100, 100, 58, a1 - 0.012, a + 0.012, true); ctx.closePath(); ctx.fillStyle = x.c; ctx.fill(); a = a1;
+  });
+  ctx.fillStyle = '#14213d'; ctx.textAlign = 'center'; ctx.font = "800 17px Sarabun, sans-serif"; ctx.fillText(center, 100, 100);
+  ctx.fillStyle = '#8a93ab'; ctx.font = "12px Sarabun, sans-serif"; ctx.fillText(sub, 100, 120);
+}
+function briefCardHTML(d, S, PS, prevDay, gain, lose) {
+  var p = PS ? pct(S.amt, PS.amt) : null, up = p === null || p >= 0;
+  var h = "<div style=\"width:540px;background:#0b1b3f;font-family:'Sarabun',sans-serif;color:#fff;line-height:normal;padding:20px 22px 18px;box-sizing:border-box\">";
+  h += "<div style='display:flex;align-items:center;gap:12px'><img src='" + LOGO + "' style='width:46px;height:46px;border-radius:50%;background:#fff;padding:2px;object-fit:contain'>" +
+    "<div style='flex:1'><div style='font-size:20px;font-weight:800'>📰 Daily Brief</div><div style='font-size:12px;color:#9fb3e0'>แพหมึกดำรงค์ ทะเลไทย · วัน" + wdOf(d) + " " + thaiDate(d) + "</div></div></div>";
+  h += "<div style='background:#132a5c;border-radius:16px;padding:14px 16px;margin-top:14px'><div style='font-size:12px;color:#9fb3e0;letter-spacing:.5px'>DAMRONG · ยอดขาย</div>" +
+    "<div style='font-size:34px;font-weight:800'>฿" + fmtN(S.amt) + "</div>" +
+    "<div style='font-size:14px;font-weight:700;color:" + (up ? '#4ade80' : '#ff7b7b') + "'>" + (p === null ? 'วันแรกในระบบ' : (up ? '▲ +' : '▼ ') + p.toFixed(2) + '% <span style="color:#9fb3e0;font-weight:500">เทียบ ' + thaiShort(prevDay) + ' (฿' + fmt0(PS.amt) + ')</span>') + "</div>" +
+    "<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;font-size:11px;color:#9fb3e0'>" +
+    ['บิล|' + S.n, 'ลูกค้า|' + S.nc, 'น้ำหนัก|' + fmt0(S.kg) + ' กก.', '฿/กก.|' + fmt0(S.kg ? S.pamt / S.kg : 0)].map(function (x) { var a = x.split('|'); return "<div>" + a[0] + "<div style='font-size:15px;font-weight:800;color:#fff'>" + a[1] + "</div></div>"; }).join('') + "</div></div>";
+  var sl = donutSlices(S);
+  h += "<div style='background:#fff;color:#14213d;border-radius:16px;padding:14px;margin-top:12px'><div style='font-size:14px;font-weight:800;margin-bottom:6px'>🍩 สินค้าขายดีของวัน</div><div style='display:flex;gap:12px;align-items:center'><canvas class='bf-donut'></canvas><div style='flex:1;font-size:12.5px'>" +
+    sl.map(function (x) { return "<div style='display:flex;align-items:center;gap:6px;padding:3px 0'><span style='width:10px;height:10px;border-radius:3px;background:" + x.c + ";flex:none'></span><span style='flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis'>" + esc(x.name) + "</span><b>" + x.pc.toFixed(0) + "%</b></div>"; }).join('') + "</div></div></div>";
+  function mvList(t, arr, col) {
+    var s = "<div style='background:#132a5c;border-radius:14px;padding:10px 12px'><div style='font-size:13px;font-weight:800;color:" + col + ";margin-bottom:4px'>" + t + "</div>";
+    arr.slice(0, 4).forEach(function (x) { s += "<div style='display:flex;justify-content:space-between;gap:6px;font-size:12px;padding:3px 0'><span style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis'>" + esc(x.name) + "</span><b style='color:" + col + ";white-space:nowrap'>" + (x.p === null ? 'ใหม่' : (x.p >= 0 ? '+' : '') + x.p.toFixed(0) + '%') + "</b></div>"; });
+    if (!arr.length) s += "<div style='font-size:12px;color:#9fb3e0'>—</div>";
+    return s + "</div>";
+  }
+  h += "<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px'>" + mvList('▲ ขึ้นแรง', gain, '#4ade80') + mvList('▼ ลงแรง', lose, '#ff7b7b') + "</div>";
+  h += "<div style='background:#132a5c;border-radius:14px;padding:10px 12px;margin-top:10px'><div style='font-size:13px;font-weight:800;margin-bottom:4px'>🏆 ลูกค้าของวัน</div>" +
+    S.custArr.slice(0, 5).map(function (x, i) { return "<div style='display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0'><span>" + (MEDAL[i] || (i + 1) + '.') + ' ' + esc(x.name) + "</span><b>฿" + fmt0(x.amt) + "</b></div>"; }).join('') + "</div>";
+  h += "<div style='text-align:center;font-size:11px;color:#6f86b8;margin-top:12px'>หลังบ้านดำรงค์ · สร้างเมื่อ " + thaiDate(todayISO()) + " " + hm(Date.now()) + " น.</div>";
+  return h + "</div>";
+}
+function briefCanvas(d, S, PS, prevDay, gain, lose) {
+  return cardCanvas(briefCardHTML(d, S, PS, prevDay, gain, lose), 540, function (card) {
+    var cv = card.querySelector('.bf-donut'); if (cv) drawDonut(cv, donutSlices(S), short(S.pamt), 'ยอดสินค้า');
+  }, '#0b1b3f');
+}
+
 function billRow(b) {
   var st = b.rem <= 0 ? '<span class="badge b-ok">จ่ายแล้ว</span>' : (b.paid > 0 ? '<span class="badge b-warn">ค้าง ' + baht(b.rem) + '</span>' : '<span class="badge b-gray">ยังไม่จ่าย</span>');
   var items = b.lines.filter(function (l) { return isProd(l); }).map(function (l) { return l.p + ' ' + fmtN(l.qty); }).join(', ');
@@ -683,69 +1138,6 @@ function renderInsights() {
   bindRows($('ins'));
 }
 
-/* ═════════════════ หน้า 2: ยอดขาย ═════════════════ */
-var salesGran = 'day', salesPeriod = null;
-function renderSales() {
-  var asOf = M.asOf, months = [];
-  for (var ym = M.minIso.slice(0, 7); ym <= asOf.slice(0, 7);) { months.push(ym); var dd = dObj(ym + '-01'); dd.setMonth(dd.getMonth() + 1); ym = isoOf(dd).slice(0, 7); }
-  if (!salesPeriod) salesPeriod = 'last30';
-  var h = '<h2>ยอดขาย</h2>';
-  h += '<div class="seg" id="gran"><button data-g="day">รายวัน</button><button data-g="week">รายสัปดาห์</button><button data-g="month">รายเดือน</button></div>';
-  h += '<div class="card"><div id="ch-sales"></div></div>';
-  h += '<div class="sec-t">สรุปช่วง</div><select class="sel" id="per"><option value="last30">30 วันล่าสุด</option><option value="last7">7 วันล่าสุด</option>' +
-    months.slice().reverse().map(function (m) { return '<option value="' + m + '">' + thaiMonth(m) + (m === asOf.slice(0, 7) ? ' (ถึงวันนี้)' : '') + '</option>'; }).join('') + '</select>';
-  h += '<div id="per-body"></div>';
-  $('pg-sales').innerHTML = h;
-  $('gran').querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-g') === salesGran); b.onclick = function () { salesGran = b.getAttribute('data-g'); renderSales(); }; });
-  $('per').value = salesPeriod; $('per').onchange = function () { salesPeriod = this.value; renderPeriod(); };
-
-  var data;
-  if (salesGran === 'day') data = dailySeries(asOf, 30).map(function (x) { return { v: x.v, lbl: String(+x.key.slice(8)), tip: 'วัน' + wdOf(x.key) + ' ' + thaiShort(x.key) }; });
-  else if (salesGran === 'week') {
-    var ws = weekStart(asOf), arr = [];
-    for (var i = 11; i >= 0; i--) { var f = addDays(ws, -7 * i), t = addDays(f, 6), s = sumRange(f, t > asOf ? asOf : t); arr.push({ v: s.amt, lbl: thaiShort(f).replace(/ .*/, '') + '/' + (+f.slice(5, 7)), tip: thaiShort(f) + ' – ' + thaiShort(t), sub: s.n + ' บิล · ' + fmtN(s.kg) + ' กก.', hl: i === 0 }); }
-    data = arr;
-  } else data = months.map(function (m) { var dd = dObj(m + '-01'); var last = isoOf(new Date(dd.getFullYear(), dd.getMonth() + 1, 0)); var s = sumRange(m + '-01', last); return { v: s.amt, lbl: thaiMonthS(m), tip: thaiMonth(m), sub: s.n + ' บิล · ' + s.nc + ' ลูกค้า', hl: m === asOf.slice(0, 7) }; });
-  barChart($('ch-sales'), data, { h: 220, label: 'ยอดขาย' });
-  renderPeriod();
-}
-function periodRange(p) {
-  var asOf = M.asOf;
-  if (p === 'last30') return { f: addDays(asOf, -29), t: asOf, pf: addDays(asOf, -59), pt: addDays(asOf, -30), lbl: '30 วันก่อนหน้า' };
-  if (p === 'last7') return { f: addDays(asOf, -6), t: asOf, pf: addDays(asOf, -13), pt: addDays(asOf, -7), lbl: '7 วันก่อนหน้า' };
-  var d = dObj(p + '-01'), last = isoOf(new Date(d.getFullYear(), d.getMonth() + 1, 0)), t = last > asOf ? asOf : last;
-  var pm = new Date(d.getFullYear(), d.getMonth() - 1, 1), pmLast = new Date(d.getFullYear(), d.getMonth(), 0);
-  var span = +t.slice(8, 10), pt = isoOf(new Date(pm.getFullYear(), pm.getMonth(), Math.min(span, pmLast.getDate())));
-  return { f: p + '-01', t: t, pf: isoOf(pm), pt: pt, lbl: (t < last ? '1–' + span + ' ' : '') + MTHF[pm.getMonth()] };
-}
-function renderPeriod() {
-  var R = periodRange(salesPeriod), cur = sumRange(R.f, R.t), prev = sumRange(R.pf, R.pt);
-  var cats = {}, custs = {}, prods = {};
-  M.bills.forEach(function (b) {
-    if (b.iso < R.f || b.iso > R.t) return;
-    custs[b.cust] = custs[b.cust] || { name: b.cust, amt: 0, n: 0 }; custs[b.cust].amt += b.grand; custs[b.cust].n++;
-    b.lines.forEach(function (l) {
-      if (!isProd(l)) return;
-      cats[l.cat] = cats[l.cat] || { name: l.cat, amt: 0, kg: 0 }; cats[l.cat].amt += l.total; cats[l.cat].kg += l.qty;
-      prods[l.p] = prods[l.p] || { name: l.p, amt: 0, kg: 0 }; prods[l.p].amt += l.total; prods[l.p].kg += l.qty;
-    });
-  });
-  var h = '<div class="note" style="background:#eef2fb;color:var(--ink2)">📅 ' + thaiDate(R.f) + ' – ' + thaiDate(R.t) + ' · เทียบกับ ' + esc(R.lbl) + '</div>';
-  h += '<div class="grid g3">';
-  h += tile('ยอดขาย', baht(cur.amt), chg(cur.amt, prev.amt) + ' จาก ' + baht(prev.amt));
-  h += tile('จำนวนบิล', fmt0(cur.n) + ' ใบ', chg(cur.n, prev.n) + ' จาก ' + fmt0(prev.n));
-  h += tile('ลูกค้าที่ซื้อ', fmt0(cur.nc) + ' ราย', chg(cur.nc, prev.nc) + ' จาก ' + fmt0(prev.nc));
-  h += tile('น้ำหนักรวม', fmtN(Math.round(cur.kg)) + ' กก.', chg(cur.kg, prev.kg));
-  h += tile('เฉลี่ยต่อบิล', '฿' + fmt0(cur.n ? cur.amt / cur.n : 0), chg(cur.n ? cur.amt / cur.n : 0, prev.n ? prev.amt / prev.n : 0));
-  h += '</div>';
-  var ca = Object.keys(cats).map(function (k) { return cats[k]; }).sort(function (a, b) { return b.amt - a.amt; });
-  var cu = Object.keys(custs).map(function (k) { return custs[k]; }).sort(function (a, b) { return b.amt - a.amt; }).slice(0, 10);
-  var pr = Object.keys(prods).map(function (k) { return prods[k]; }).sort(function (a, b) { return b.amt - a.amt; }).slice(0, 10);
-  h += '<div class="sec-t">ยอดตามหมวดสินค้า <small>ไม่รวมค่าส่ง/กล่อง</small></div><div class="card">' + (ca.length ? hbars(ca, function (x) { return x.amt; }, function (x) { return fmtN(Math.round(x.kg)) + ' กก.'; }) : '<div class="empty">ไม่มีข้อมูล</div>') + '</div>';
-  h += '<div class="wide2"><div><div class="sec-t">🏆 ลูกค้ายอดสูงสุด</div><div class="card">' + (cu.length ? hbars(cu, function (x) { return x.amt; }, function (x) { return x.n + ' บิล'; }) : '<div class="empty">ไม่มีข้อมูล</div>') + '</div></div>';
-  h += '<div><div class="sec-t">🦑 สินค้ายอดสูงสุด</div><div class="card">' + (pr.length ? hbars(pr, function (x) { return x.amt; }, function (x) { return fmtN(Math.round(x.kg)) + ' กก.'; }) : '<div class="empty">ไม่มีข้อมูล</div>') + '</div></div></div>';
-  $('per-body').innerHTML = h;
-}
 function tile(l, v, s) { return '<div class="card tile"><div class="lbl">' + l + '</div><div class="val num">' + v + '</div>' + (s ? '<div class="sub">' + s + '</div>' : '') + '</div>'; }
 
 /* ═════════════════ หน้า 3: ลูกหนี้ ═════════════════ */
@@ -858,19 +1250,23 @@ function stmtHTML(c) {
   h += "<div style='text-align:center;font-size:11px;color:#8896bb;line-height:1.7'>บริษัทดำรงค์ ซีฟู้ดจำกัด · โทร 092-2627486<br>สร้างเมื่อ " + thaiDate(todayISO()) + "</div>";
   return h + "</div></div>";
 }
-/* วาดเป็นรูป: วางการ์ดขนาดจริงไว้นอกจอ แล้วถ่ายด้วย html2canvas (ทุกเครื่องได้รูปกว้าง 1280px เท่ากัน) */
-function stmtCanvas(c) {
+/* วาดการ์ด HTML เป็นรูป: วางไว้นอกจอขนาดจริง แล้วถ่ายด้วย html2canvas (ทุกเครื่องได้รูปขนาดเท่ากัน) */
+function cardCanvas(html, width, prep, bg) {
   if (!window.html2canvas) return Promise.reject(new Error('โหลดเครื่องมือสร้างรูปไม่ได้'));
   var hold = document.createElement('div');
-  hold.style.cssText = 'position:fixed;left:-10000px;top:0;width:640px;background:#fff;z-index:-1';
-  hold.innerHTML = stmtHTML(c); document.body.appendChild(hold);
+  hold.style.cssText = 'position:fixed;left:-10000px;top:0;width:' + width + 'px;background:' + (bg || '#fff') + ';z-index:-1';
+  hold.innerHTML = html; document.body.appendChild(hold);
   var card = hold.firstChild;
-  var go = function () { return html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true, logging: false, windowWidth: 1280 }); };
   var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
-  return ready.then(go).then(function (cv) { hold.remove(); return cv; }, function (e) { hold.remove(); throw e; });
+  return ready.then(function () {
+    if (prep) prep(card);
+    return html2canvas(card, { scale: 2, backgroundColor: bg || '#ffffff', useCORS: true, logging: false, windowWidth: 1280 });
+  }).then(function (cv) { hold.remove(); return cv; }, function (e) { hold.remove(); throw e; });
 }
+function stmtCanvas(c) { return cardCanvas(stmtHTML(c), 640); }
 function canvasBlob(cv) { return new Promise(function (res, rej) { cv.toBlob(function (b) { b ? res(b) : rej(new Error('สร้างรูปไม่ได้')); }, 'image/png'); }); }
-function stmtFileName(c) { return 'สรุปยอด-' + c.name.replace(/[\\/:*?"<>|]/g, '') + '-' + todayISO() + '.png'; }
+function safeName(s) { return String(s).replace(/[\\/:*?"<>|]/g, ''); }
+function stmtFileName(c) { return 'สรุปยอด-' + safeName(c.name) + '-' + todayISO() + '.png'; }
 function saveBlob(blob, name) {
   var f = null; try { f = new File([blob], name, { type: 'image/png' }); } catch (e) { }
   if (f && navigator.canShare && navigator.canShare({ files: [f] })) {   /* iPad / มือถือ: เปิดเมนูแชร์ (บันทึกรูป / ส่ง LINE) */
@@ -880,12 +1276,13 @@ function saveBlob(blob, name) {
   setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
   return Promise.resolve();
 }
-function copyStmt(c, btn) {
+/* คัดลอกรูปลงคลิปบอร์ด (ใช้ทั้งใบสรุปยอดหนี้ / รายงาน / Brief) */
+function copyImage(makeCanvas, fileName, btn) {
   var label = btn.innerHTML; btn.disabled = true; btn.innerHTML = '⏳ กำลังสร้างรูป…';
-  var blobP = stmtCanvas(c).then(canvasBlob);
+  var blobP = Promise.resolve().then(makeCanvas).then(canvasBlob);
   var done = function (msg) { btn.disabled = false; btn.innerHTML = label; if (msg) toast(msg); };
   var fallback = function () {
-    blobP.then(function (b) { return saveBlob(b, stmtFileName(c)).then(function () { done('คัดลอกไม่ได้ในเครื่องนี้ — บันทึกรูปให้แทน'); }); })
+    blobP.then(function (b) { return saveBlob(b, fileName).then(function () { done('คัดลอกไม่ได้ในเครื่องนี้ — บันทึกรูปให้แทน'); }); })
       .catch(function (e) { done('สร้างรูปไม่ได้: ' + e.message); });
   };
   if (navigator.clipboard && navigator.clipboard.write && window.ClipboardItem) {
@@ -893,17 +1290,18 @@ function copyStmt(c, btn) {
     /* ส่ง Promise เข้า ClipboardItem ทันทีในจังหวะที่แตะปุ่ม (Safari/iPad ต้องการแบบนี้) */
     try { p = navigator.clipboard.write([new ClipboardItem({ 'image/png': blobP })]); } catch (e) { p = Promise.reject(e); }
     p.then(function () { done('✅ คัดลอกรูปแล้ว — ไปวางในแชท LINE ได้เลย'); }, function () {
-      /* บางเบราว์เซอร์ไม่รับ Promise → ลองด้วยไฟล์รูปที่สร้างเสร็จแล้ว */
       blobP.then(function (b) { return navigator.clipboard.write([new ClipboardItem({ 'image/png': b })]); })
         .then(function () { done('✅ คัดลอกรูปแล้ว — ไปวางในแชท LINE ได้เลย'); }, fallback);
     });
   } else fallback();
 }
-function saveStmt(c, btn) {
+function saveImage(makeCanvas, fileName, btn) {
   var label = btn.innerHTML; btn.disabled = true; btn.innerHTML = '⏳ กำลังสร้างรูป…';
-  stmtCanvas(c).then(canvasBlob).then(function (b) { return saveBlob(b, stmtFileName(c)); })
+  Promise.resolve().then(makeCanvas).then(canvasBlob).then(function (b) { return saveBlob(b, fileName); })
     .then(function () { btn.disabled = false; btn.innerHTML = label; }, function (e) { btn.disabled = false; btn.innerHTML = label; toast('สร้างรูปไม่ได้: ' + e.message); });
 }
+function copyStmt(c, btn) { copyImage(function () { return stmtCanvas(c); }, stmtFileName(c), btn); }
+function saveStmt(c, btn) { saveImage(function () { return stmtCanvas(c); }, stmtFileName(c), btn); }
 function fitPreview(root) {
   var w = root.querySelector('.stmt-prev'); if (!w) return;
   var z = Math.min(1, (w.clientWidth - 2) / 640);
@@ -1073,8 +1471,8 @@ function openProd(name) {
    cloud — ล็อกอินแล้ว อ่าน app_records จาก Supabase
    local — ยังไม่ล็อกอิน แต่ Chrome เครื่องนี้มีข้อมูลบิล (เปิดบิล/POS อยู่เครื่องเดียวกัน) → อ่าน localStorage ตรง ๆ ไม่เขียน
    file  — เปิดจากไฟล์สำรอง .json                                                                                  */
-var PAGES = ['home', 'sales', 'debt', 'cust', 'prod'], cur = 'home', isViewer = false;
-var RENDER = { home: renderHome, sales: renderSales, debt: renderDebt, cust: renderCust, prod: renderProd };
+var PAGES = ['home', 'brief', 'debt', 'cust', 'prod'], cur = 'home', isViewer = false;
+var RENDER = { home: renderHome, brief: renderBrief, debt: renderDebt, cust: renderCust, prod: renderProd };
 function go(p) {
   cur = p; closeSheet();
   PAGES.forEach(function (x) { $('pg-' + x).classList.toggle('hidden', x !== p); });
@@ -1216,7 +1614,7 @@ function bindChrome() {
   var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (M && !$('app').classList.contains('hidden') && !$('sheet')) go(cur); }, 250); });
 }
 
-window.REPORT = { buildModel: buildModel, fromRows: fromRows, fromBackup: fromBackup, followUps: followUps, productTrend: productTrend, stmtHTML: stmtHTML, stmtNums: stmtNums, stmtCanvas: stmtCanvas, get M() { return M; }, get mode() { return srcMode; }, get viewer() { return isViewer; }, setModel: function (m) { M = m; } };
+window.REPORT = { buildModel: buildModel, fromRows: fromRows, fromBackup: fromBackup, followUps: followUps, productTrend: productTrend, stmtHTML: stmtHTML, stmtNums: stmtNums, stmtCanvas: stmtCanvas, reportCanvas: reportCanvas, briefCanvas: briefCanvas, rangeOf: rangeOf, statsOf: statsOf, weeklyCandles: weeklyCandles, get M() { return M; }, get mode() { return srcMode; }, get viewer() { return isViewer; }, setModel: function (m) { M = m; } };
 document.addEventListener('DOMContentLoaded', function () {
   bindChrome();
   if (window.REPORT_TEST && window.REPORT_TEST.noAuto) { showLogin(); return; }
