@@ -10,6 +10,10 @@
 <meta name="theme-color" content="#1a3a8f">
 <meta name="robots" content="noindex,nofollow">
 <title>หลังบ้านดำรงค์ · รายงาน</title>
+<script>/* โหมดมืด/สว่าง: ตั้งก่อนวาดหน้า กันจอกระพริบ */
+(function(){var t=null;try{t=localStorage.getItem('rep_theme')}catch(e){}
+if(t!=='dark'&&t!=='light')t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);})();</script>
 <script>window.DSYNC_LINKS={"home": "index.html", "bill": "bill.html", "pos": "pos.html", "report": "report.html"};</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -294,6 +298,70 @@ details.more summary::-webkit-details-marker{display:none}
 .c-note .cl.up{background:#12a150}.c-note .cl.down{background:#e0413e}
 .c-note .ma-l{display:inline-block;width:16px;border-top:2px dashed #6250d6;vertical-align:3px;margin:0 3px 0 6px}
 
+/* ═══════ โหมดมืด (html[data-theme=dark]) ═══════ */
+html[data-theme=dark]{color-scheme:dark;
+  --bg:#0c1322; --card:#141d31; --ink:#e7ecf6; --ink2:#a8b3cb; --muted:#7b88a6; --line:#243049;
+  --brand:#4f84ec; --brand2:#2d5cc4; --series:#4a8fe7; --series-soft:#21365a;
+  --good:#4ade80; --good-bg:#123726; --warn:#f5b94f; --warn-bg:#3a2b10; --bad:#ff7d7a; --bad-bg:#3e1b1f}
+html[data-theme=dark] body{background:var(--bg)}
+html[data-theme=dark] .top{background:linear-gradient(135deg,#0f1d3d,#1b3470)}
+html[data-theme=dark] .card,html[data-theme=dark] .list,html[data-theme=dark] .fu,html[data-theme=dark] .tblwrap,html[data-theme=dark] .tbl,
+html[data-theme=dark] .aging .ag,html[data-theme=dark] .mv,html[data-theme=dark] .daynav button,html[data-theme=dark] .sel,html[data-theme=dark] .msg{background:var(--card);color:var(--ink)}
+html[data-theme=dark] .card{box-shadow:none}
+html[data-theme=dark] .nav{background:#111a2c;border-top-color:var(--line)}
+html[data-theme=dark] .nav button.on{background:#1c2a47;color:#8fb4ff}
+html[data-theme=dark] .hero{background:linear-gradient(135deg,#16213a,#1a2848)}
+html[data-theme=dark] .tile.click:active,html[data-theme=dark] .row:active{background:#1b2742}
+html[data-theme=dark] .chg.flat,html[data-theme=dark] .b-gray{background:#222d45;color:var(--ink2)}
+html[data-theme=dark] .seg{background:#1a2439}
+html[data-theme=dark] .seg button.on{background:#2a3858;color:#cfe0ff}
+html[data-theme=dark] .row,html[data-theme=dark] .ins,html[data-theme=dark] .hbar,html[data-theme=dark] .tbl td,html[data-theme=dark] .rank .rk,html[data-theme=dark] .dleg>div{border-color:#1f2a40}
+html[data-theme=dark] .hbar .b{background:#1f2a40}
+html[data-theme=dark] .ic.info{background:#1d2c4b}
+html[data-theme=dark] .search{background-color:var(--card);color:var(--ink)}
+html[data-theme=dark] .fu .pitch{background:#1a2742}
+html[data-theme=dark] .fu .pitch b{color:#8fb4ff}
+html[data-theme=dark] .btn.sec{background:#1f2c4a;color:#a9c6ff}
+html[data-theme=dark] .sheet{background:var(--bg)}
+html[data-theme=dark] .sheet .sh{background:#111a2c;border-bottom-color:var(--line)}
+html[data-theme=dark] .sheet .sh .x{background:#222d45;color:var(--ink)}
+html[data-theme=dark] .sheet .sh a{color:#8fb4ff!important}
+html[data-theme=dark] .stmt-prev{border-color:var(--line)}
+html[data-theme=dark] .kb{background:#13284a;color:#9cc4ff;border-color:#1d3a66}
+html[data-theme=dark] .kv{background:#211d45;color:#b8adff;border-color:#2e2860}
+html[data-theme=dark] .kg{background:#10342a;color:#6fe0ac;border-color:#18493a}
+html[data-theme=dark] .ko{background:#3a2216;color:#ffab7f;border-color:#52301f}
+html[data-theme=dark] .catbar{background:var(--card)}
+html[data-theme=dark] .debt-tile{background:linear-gradient(135deg,#141d31,#2a1a22)}
+html[data-theme=dark] .mv.up .mv-p{background:#123726;color:#4ade80}
+html[data-theme=dark] .mv.down .mv-p{background:#3e1b1f;color:#ff8f8c}
+html[data-theme=dark] .brand{box-shadow:0 14px 34px rgba(0,0,0,.45)}
+html[data-theme=dark] .ticker{background:linear-gradient(160deg,#08142e,#10285c);box-shadow:0 14px 32px rgba(0,0,0,.5)}
+html[data-theme=dark] .chart .tt,html[data-theme=dark] .toast{background:#e7ecf6;color:#0c1322}
+/* กราฟ SVG: เส้นตาราง/ตัวอักษรให้อ่านได้บนพื้นมืด */
+html[data-theme=dark] .chart svg line{stroke:#253150}
+html[data-theme=dark] .chart svg text{fill:#8592b0}
+html[data-theme=dark] .chart svg text[font-weight="700"]{fill:#a9c6ff}
+html[data-theme=dark] .donut-svg text{fill:#e7ecf6}
+html[data-theme=dark] .donut-svg text+text{fill:#8592b0}
+html[data-theme=dark] .login .box{background:#141d31;color:var(--ink)}
+html[data-theme=dark] .login input{background:#0f1729;color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] .login h1{color:#8fb4ff}
+.theme-btn{font-size:17px}
+
+/* แถบบนจอแคบ: ไม่ให้ล้นจอ (ล้น = แถบเมนูล่างตกขอบ) */
+.top-in{min-width:0}
+.top h1{min-width:0}
+@media(max-width:480px){
+  .top .ro{display:none}
+  .top .upd{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:11px;max-width:96px}
+  .top-in{gap:6px}
+  .icon-btn{width:36px;height:36px;font-size:16px}
+  #btn-out{padding:0 8px!important}
+}
+@media(max-width:350px){ .top .upd{display:none} }
+html[data-theme=dark] .note{background:#1a2742!important;color:var(--ink2)!important}
+
 </style>
 </head>
 <body>
@@ -319,6 +387,7 @@ details.more summary::-webkit-details-marker{display:none}
     <h1>📊 รายงาน</h1>
     <span class="ro">ดูอย่างเดียว</span>
     <span class="upd" id="upd"></span>
+    <button class="icon-btn theme-btn" id="btn-theme" aria-label="สลับโหมดมืด/สว่าง" title="สลับโหมดมืด/สว่าง">🌙</button>
     <button class="icon-btn" id="btn-ref" aria-label="โหลดข้อมูลใหม่" title="โหลดข้อมูลใหม่">⟳</button>
     <button class="icon-btn" id="btn-out" aria-label="ออกจากระบบ" title="ออกจากระบบ" style="width:auto;padding:0 10px;font-size:14px">ออก</button>
   </div></header>
@@ -1593,6 +1662,24 @@ function bindChrome() {
     rd.readAsText(f);
   };
   document.querySelectorAll('.nav button').forEach(function (b) { b.onclick = function () { go(b.getAttribute('data-p')); }; });
+  /* โหมดมืด/สว่าง (จำไว้ในเครื่อง) */
+  var themeOf = function () { return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; };
+  var paintTheme = function () {
+    var t = themeOf(); $('btn-theme').textContent = t === 'dark' ? '☀️' : '🌙';
+    $('btn-theme').title = t === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด';
+    var m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute('content', t === 'dark' ? '#0c1322' : '#1a3a8f');
+  };
+  paintTheme();
+  $('btn-theme').onclick = function () {
+    var t = themeOf() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    try { localStorage.setItem('rep_theme', t); } catch (e) { }
+    paintTheme();
+  };
+  if (window.matchMedia) {   /* ยังไม่เคยเลือกเอง → ตามเครื่อง */
+    var mq = matchMedia('(prefers-color-scheme: dark)'), onSys = function () { var saved = null; try { saved = localStorage.getItem('rep_theme'); } catch (e) { } if (!saved) { document.documentElement.setAttribute('data-theme', mq.matches ? 'dark' : 'light'); paintTheme(); } };
+    if (mq.addEventListener) mq.addEventListener('change', onSys); else if (mq.addListener) mq.addListener(onSys);
+  }
   $('btn-home').onclick = function () { if (LINKS.home) window.location.href = LINKS.home; };
   $('btn-ref').onclick = function () {
     if (srcMode === 'cloud') loadCloud(true).then(function () { toast('อัปเดตข้อมูลแล้ว'); });
