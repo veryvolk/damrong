@@ -11,7 +11,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>หลังบ้านดำรงค์ · รายงาน</title>
 <script>/* โหมดมืด/สว่าง: ตั้งก่อนวาดหน้า กันจอกระพริบ */
-(function(){var t=null;try{t=localStorage.getItem('rep_theme')}catch(e){}
+(function(){var t=null;try{t=localStorage.getItem('damrong_theme')||localStorage.getItem('rep_theme')}catch(e){}
 if(t!=='dark'&&t!=='light')t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);})();</script>
 <script>window.DSYNC_LINKS={"home": "index.html", "bill": "bill.html", "pos": "pos.html", "report": "report.html"};</script>
@@ -1673,13 +1673,18 @@ function bindChrome() {
   $('btn-theme').onclick = function () {
     var t = themeOf() === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', t);
-    try { localStorage.setItem('rep_theme', t); } catch (e) { }
+    try { localStorage.setItem('damrong_theme', t); } catch (e) { }   /* ใช้ร่วมกับ POS / บิล */
     paintTheme();
   };
   if (window.matchMedia) {   /* ยังไม่เคยเลือกเอง → ตามเครื่อง */
-    var mq = matchMedia('(prefers-color-scheme: dark)'), onSys = function () { var saved = null; try { saved = localStorage.getItem('rep_theme'); } catch (e) { } if (!saved) { document.documentElement.setAttribute('data-theme', mq.matches ? 'dark' : 'light'); paintTheme(); } };
+    var mq = matchMedia('(prefers-color-scheme: dark)'), onSys = function () { var saved = null; try { saved = localStorage.getItem('damrong_theme') || localStorage.getItem('rep_theme'); } catch (e) { } if (!saved) { document.documentElement.setAttribute('data-theme', mq.matches ? 'dark' : 'light'); paintTheme(); } };
     if (mq.addEventListener) mq.addEventListener('change', onSys); else if (mq.addListener) mq.addListener(onSys);
   }
+  /* เปลี่ยนโหมดจากแท็บ POS / บิล → ตามทันที */
+  window.addEventListener('storage', function (e) {
+    if (e.key !== 'damrong_theme' || (e.newValue !== 'dark' && e.newValue !== 'light')) return;
+    document.documentElement.setAttribute('data-theme', e.newValue); paintTheme();
+  });
   $('btn-home').onclick = function () { if (LINKS.home) window.location.href = LINKS.home; };
   $('btn-ref').onclick = function () {
     if (srcMode === 'cloud') loadCloud(true).then(function () { toast('อัปเดตข้อมูลแล้ว'); });
