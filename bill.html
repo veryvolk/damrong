@@ -959,6 +959,29 @@ button:hover{background:#f0f4ff}
 .hist-tbl td.r{text-align:right;font-weight:600}
 .hist-tbl tr:hover{background:#fafbff;cursor:pointer}
 .hist-tbl tr:last-child td{border-bottom:none}
+/* HIST-MOBILE v1 */
+@media (max-width:700px){
+  #hist-table-wrap{overflow:visible!important;border:none!important;border-radius:0!important}
+  .hist-tbl,.hist-tbl tbody{display:block;width:100%}
+  .hist-tbl thead{display:none}
+  .hist-tbl tr{display:grid;grid-template-columns:auto auto 1fr auto;
+    grid-template-areas:"cust cust cust total" "no date prov prov" "sales status . del";
+    align-items:center;gap:6px 8px;padding:12px;margin-bottom:10px;background:#fff;border:1px solid #c5d3ef;border-radius:12px}
+  .hist-tbl tr:last-child td,.hist-tbl td{border-bottom:none;padding:0}
+  .hist-tbl td:nth-child(1){grid-area:no}
+  .hist-tbl td:nth-child(2){grid-area:date;font-size:12px;color:#6b7a9e;white-space:nowrap}
+  .hist-tbl td:nth-child(3){grid-area:cust;font-size:15px;font-weight:700;color:#1a2340;line-height:1.35}
+  .hist-tbl td:nth-child(4){grid-area:prov;font-size:12px;color:#6b7a9e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hist-tbl td:nth-child(5){grid-area:total;font-size:16px;font-weight:800;color:#1a2340;white-space:nowrap}
+  .hist-tbl td:nth-child(6){grid-area:sales;text-align:left!important}
+  .hist-tbl td:nth-child(7){grid-area:status;text-align:left!important}
+  .hist-tbl td:nth-child(8){grid-area:del;text-align:right!important}
+  .hist-tbl td .badge{font-size:11px;white-space:nowrap}
+  .hist-tbl td .status-btn,.hist-tbl td .sales-tag-btn{font-size:12.5px;padding:6px 10px;white-space:nowrap}
+  .hist-tbl td .b-red.b-sm{padding:6px 10px}
+  .hist-tbl td[colspan]{grid-area:auto!important;grid-column:1/-1;text-align:center}
+  .hist-tbl tr:has(td[colspan]){display:block;border:none;background:transparent;padding:4px 0}
+}
 .no-data{text-align:center;padding:40px;color:#8896bb;font-size:13px}
 .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500}
 .badge-blue{background:#e8f0ff;color:#1a3a8f}
